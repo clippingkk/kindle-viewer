@@ -1,0 +1,58 @@
+﻿<Page
+    x:Class="kindle_viewer.ClipListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:kindle_viewer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <x:String x:Key="Title">Kindle Clips</x:String>
+    </Page.Resources>
+    
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{StaticResource Title}" />
+        <ListView Grid.Row="1" x:Name="listView" ItemsSource="{x:Bind Collections}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <RelativePanel Padding="20">
+                        <TextBlock 
+                            Text="{Binding content}"
+                            Margin="0, 0, 50, 0"
+                            FontSize="50"
+                            Name="content"
+                            FontWeight="Light"
+                            MaxWidth="700"
+                            TextWrapping="Wrap"
+                            />
+                        <TextBlock
+                            Text="{Binding title}"
+                            TextAlignment="Right"
+                            RelativePanel.Below="content"
+                            RelativePanel.AlignRightWithPanel="True"
+                            Name="title"
+                            FontWeight="Light"
+                            FontSize="12"
+                            />
+                        <TextBlock 
+                            Text="{Binding author}"
+                            TextAlignment="Right"
+                            RelativePanel.Below="title"
+                            RelativePanel.AlignRightWithPanel="True"
+                            FontWeight="Light"
+                            FontSize="12"
+                            />
+                    </RelativePanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+
+</Page>
