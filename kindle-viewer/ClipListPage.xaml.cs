@@ -55,6 +55,13 @@ namespace kindle_viewer
 
             Debug.WriteLine(this.Collections.Count);
         }
+
+        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var f = Window.Current.Content as Frame;
+            var index = (sender as ListBox).SelectedIndex;
+            f.Navigate(typeof(DetailPage), this.Collections.ElementAt(index));
+        }
     }
 
     

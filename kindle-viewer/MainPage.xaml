@@ -15,6 +15,5 @@
             VerticalAlignment="Center"
             Text="请把 clipings.txt 丢给我" FontSize="36"
             />
-        <Button Click="Button_Click">Nav</Button>
     </Grid>
 </Page>

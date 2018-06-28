@@ -30,25 +30,6 @@ namespace kindle_viewer
         public MainPage()
         {
             this.InitializeComponent();
-
-        }
-
-        private void fakeNav()
-        {
-            List<ClipItem> clipItems = new List<ClipItem>();
-
-            foreach (var i in Enumerable.Range(0, 25))
-            {
-                var item = new ClipItem();
-                item.content = $"lallalalal--{i}";
-                item.author = "AnnatarHe";
-                item.title = "C# in depth";
-
-                clipItems.Add(item);
-            }
-
-            Frame.Navigate(typeof(ClipListPage), clipItems);
-
         }
 
         private async void Grid_Drop(object sender, DragEventArgs e)
@@ -109,9 +90,5 @@ namespace kindle_viewer
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.fakeNav();
-        }
     }
 }
