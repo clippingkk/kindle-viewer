@@ -19,8 +19,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="{StaticResource Title}" />
-        <ListView Grid.Row="1" x:Name="listView" ItemsSource="{x:Bind Collections}">
-            <ListView.ItemTemplate>
+        <ListBox Grid.Row="1" x:Name="listView" ItemsSource="{x:Bind Collections}" >
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <RelativePanel Padding="20">
                         <TextBlock 
@@ -51,8 +51,8 @@
                             />
                     </RelativePanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 
 </Page>
