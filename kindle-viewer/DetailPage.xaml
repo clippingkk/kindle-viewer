@@ -28,17 +28,24 @@
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <Image HorizontalAlignment="Center" Source="{x:Bind book.image}" />
+                    <Image
+                        HorizontalAlignment="Center"
+                        Source="{x:Bind book.Image, Mode=OneWay}"
+                        Width="270"
+                        Height="382.5"
+                        Stretch="Uniform"
+                        />
                     <TextBlock 
                         Text="{x:Bind clipItem.title}"
                         HorizontalAlignment="Center"
                         />
-                    <TextBlock Text="{x:Bind book.author}"
+                    <TextBlock Text="{x:Bind book.Author, Mode=OneWay}"
                                HorizontalAlignment="Center"
                                />
+                    <HyperlinkButton NavigateUri="{x:Bind book.EbookUrl, Mode=OneWay}">立即购买</HyperlinkButton>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="{x:Bind clipItem.content}" TextWrapping="Wrap" />
+                    <TextBlock Text="{x:Bind Path=clipItem.content}" TextWrapping="Wrap" />
                 </StackPanel>
             </Grid>
         </StackPanel>

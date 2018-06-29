@@ -14,32 +14,13 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
-using Windows.Data.Json;
+using Windows.UI.Xaml.Media.Imaging;
+using kindle_viewer.Model;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace kindle_viewer
 {
-    class DBBookInfo
-    {
-        public string rating { get; set; }
-        public string image { get; set; }
-        public string ebookUrl { get; set; }
-        public string author { get; set; }
-
-        public DBBookInfo(
-            string rating,
-            string image,
-            string ebookUrl,
-            string author
-            )
-        {
-            this.rating = rating;
-            this.image = image;
-            this.ebookUrl = ebookUrl;
-            this.author = author;
-        }
-    }
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -47,7 +28,7 @@ namespace kindle_viewer
     {
 
         private ClipItem clipItem;
-        private DBBookInfo book;
+        private DBBookInfo book { get; set; } = new DBBookInfo();
 
         public DetailPage()
         {
@@ -79,20 +60,22 @@ namespace kindle_viewer
                 StreamReader reader = new StreamReader(stream);
                 jsonString = reader.ReadToEnd();
             }
+            var bookInfoData = Newtonsoft.Json.Linq.JObject.Parse(jsonString)["books"].Children().ToList().First();
+            var rating = bookInfoData["rating"]["average"].ToString();
+            var image = bookInfoData["image"].ToString();
+            var ebookUrl = bookInfoData["ebook_url"] == null ? "https://AnnatarHe.com" : bookInfoData["ebook_url"].ToString();
 
-            var d = JsonObject.Parse(jsonString).GetObject();
-            var firstBook = d.GetNamedArray("books").First().GetObject();
-            var rating = firstBook.GetNamedObject("rating").GetNamedString("average");
-            var image = firstBook.GetNamedString("image");
-            var ebookUrl = firstBook.GetNamedString("ebook_url");
-            var authors = firstBook.GetNamedArray("author");
 
-            DBBookInfo bookInfo = new DBBookInfo(
-                rating, image, ebookUrl, string.Join(", ", authors)
-                );
-            this.book = bookInfo;
+            // var authors = bookInfoData["authors"].Children().ToArray().ToString();
+            var authorsInData = bookInfoData["authors"];
 
-            Debug.WriteLine(jsonString);
+            var authors = authorsInData == null ? "" : authorsInData.Children().ToArray().ToString();
+
+            this.book.Rating = rating;
+            this.book.Author = authors;
+            this.book.EbookUrl = ebookUrl;
+            this.book.Image = new BitmapImage(new Uri(image));
+
             return jsonString;
         }
 
