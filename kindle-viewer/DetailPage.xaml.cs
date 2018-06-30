@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.Xaml.Media.Imaging;
 using kindle_viewer.Model;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,6 +29,7 @@ namespace kindle_viewer
     {
 
         private ClipItem clipItem;
+        private SystemNavigationManager navigationManager;
         private DBBookInfo book { get; set; } = new DBBookInfo();
 
         public DetailPage()
@@ -41,8 +43,24 @@ namespace kindle_viewer
             var clipItem = (ClipItem)e.Parameter;
             this.clipItem = clipItem;
 
+            this.navigationManager = SystemNavigationManager.GetForCurrentView();
+            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            this.navigationManager.BackRequested += this.onAppBarBackRequested;
             LoadBookInfo();
         }
+
+        private void onAppBarBackRequested(Object sender, BackRequestedEventArgs e)
+        {
+                var f = Window.Current.Content as Frame;
+                if (f.CanGoBack)
+                {
+                    f.GoBack();
+                }
+                this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            this.navigationManager.BackRequested -= this.onAppBarBackRequested;
+        }
+
+
 
         private async Task<String> LoadBookInfo()
         {
@@ -77,16 +95,6 @@ namespace kindle_viewer
             this.book.Image = new BitmapImage(new Uri(image));
 
             return jsonString;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var f = Window.Current.Content as Frame;
-
-            if (f.CanGoBack)
-            {
-                f.GoBack();
-            }
         }
     }
 }

@@ -49,7 +49,6 @@ namespace kindle_viewer
 
             foreach(var item in list)
             {
-                Debug.WriteLine(item.title);
                 this.Collections.Add(item);
             }
 
@@ -59,7 +58,7 @@ namespace kindle_viewer
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var f = Window.Current.Content as Frame;
-            var index = (sender as ListBox).SelectedIndex;
+            var index = (sender as ListView).SelectedIndex;
             f.Navigate(typeof(DetailPage), this.Collections.ElementAt(index));
         }
     }

@@ -5,8 +5,11 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,7 +31,7 @@ namespace kindle_viewer
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
+            //this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
 
@@ -70,7 +73,27 @@ namespace kindle_viewer
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
+                this.setupTitlebar();
+
             }
+        }
+
+        private void setupTitlebar()
+        {
+            //var titlebarInApp = Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar;
+            //titlebarInApp.ExtendViewIntoTitleBar = false;
+            //ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            titleBar.ForegroundColor = Colors.White;
+            titleBar.ButtonForegroundColor = Colors.White;
+            titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
+
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
         }
 
         /// <summary>

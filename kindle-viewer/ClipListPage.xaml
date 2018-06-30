@@ -13,15 +13,14 @@
         <x:String x:Key="Title">Kindle Clips</x:String>
     </Page.Resources>
     
-    <Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="{StaticResource Title}" />
-        <ListBox Grid.Row="1" x:Name="listView" ItemsSource="{x:Bind Collections}" SelectionChanged="listView_SelectionChanged" >
-            <ListBox.ItemTemplate>
+        <ListView
+            Grid.Row="1"
+            x:Name="listView"
+            ItemsSource="{x:Bind Collections}"
+            SelectionChanged="listView_SelectionChanged"
+            Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
+            >
+        <ListView.ItemTemplate>
                 <DataTemplate>
                     <RelativePanel Padding="20">
                         <TextBlock 
@@ -52,8 +51,7 @@
                             />
                     </RelativePanel>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+            </ListView.ItemTemplate>
+        </ListView>
 
 </Page>

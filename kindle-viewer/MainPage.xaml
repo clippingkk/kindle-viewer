@@ -8,12 +8,12 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid AllowDrop="True" Drop="Grid_Drop" DragOver="Grid_DragOver">
+    <StackPanel AllowDrop="True" Drop="Grid_Drop" DragOver="Grid_DragOver" Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}">
         <TextBlock
             x:Name="Tip"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Text="请把 clipings.txt 丢给我" FontSize="36"
             />
-    </Grid>
+    </StackPanel>
 </Page>
