@@ -8,12 +8,47 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel AllowDrop="True" Drop="Grid_Drop" DragOver="Grid_DragOver" Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}">
-        <TextBlock
-            x:Name="Tip"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Text="请把 clipings.txt 丢给我" FontSize="36"
+    <Grid
+        AllowDrop="True"
+        Drop="Grid_Drop"
+        DragOver="Grid_DragOver"
+        Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
+    >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="0, 30, 0, 0" Grid.Row="0" VerticalAlignment="Center">
+            <Rectangle Width="700" Height="400" Fill="AliceBlue" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <TextBlock
+                x:Name="Tip"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="请把 clipings.txt 丢给上面的盒子" FontSize="36"
             />
-    </StackPanel>
+            <HyperlinkButton
+                NavigateUri="https://xxx.com"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0, 20, 0, 0"
+            > 不知道文件在哪里？点我！</HyperlinkButton>
+
+            <StackPanel 
+                Orientation="Horizontal"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="0, 50, 0, 0"
+            >
+                <HyperlinkButton 
+                    NavigateUri="https://kindle.annatarhe.com"
+                    Margin="0, 0, 100, 0"
+                >官方网站</HyperlinkButton>
+                <TextBlock>
+                    Copyright: AnnatarHe
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </Page>

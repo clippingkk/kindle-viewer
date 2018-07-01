@@ -51,12 +51,12 @@ namespace kindle_viewer
 
         private void onAppBarBackRequested(Object sender, BackRequestedEventArgs e)
         {
-                var f = Window.Current.Content as Frame;
-                if (f.CanGoBack)
-                {
-                    f.GoBack();
-                }
-                this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            var f = Window.Current.Content as Frame;
+            if (f.CanGoBack)
+            {
+                f.GoBack();
+            }
+            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             this.navigationManager.BackRequested -= this.onAppBarBackRequested;
         }
 
