@@ -12,25 +12,35 @@
     <Page.Resources>
         <x:String x:Key="Title">Kindle Clips</x:String>
     </Page.Resources>
-    
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0"
+                   Fill="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
+                   
+                   />
         <ListView
             Grid.Row="1"
             x:Name="listView"
             ItemsSource="{x:Bind Collections}"
             SelectionChanged="listView_SelectionChanged"
-            Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
+            Background="{StaticResource SystemControlAltMediumLowAcrylicElementMediumBrush}"
             >
         <ListView.ItemTemplate>
                 <DataTemplate>
-                    <RelativePanel Padding="20">
-                        <TextBlock 
+                    <RelativePanel Padding="20" Margin="30" Background="Gray">
+                        <TextBlock
                             Text="{Binding content}"
                             Margin="0, 0, 50, 0"
-                            FontSize="50"
+                            FontSize="46"
                             Name="content"
                             FontWeight="Light"
                             MaxWidth="700"
                             TextWrapping="Wrap"
+                            Foreground="White"
                             />
                         <TextBlock
                             Text="{Binding title}"
@@ -40,6 +50,7 @@
                             Name="title"
                             FontWeight="Light"
                             FontSize="12"
+                            Foreground="#dddddd"
                             />
                         <TextBlock 
                             Text="{Binding author}"
@@ -48,10 +59,19 @@
                             RelativePanel.AlignRightWithPanel="True"
                             FontWeight="Light"
                             FontSize="12"
+                            Foreground="#dddddd"
                             />
                     </RelativePanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            </Style>
+        </ListView.ItemContainerStyle>
+    </ListView>
+        
+    </Grid>
+    
 
 </Page>

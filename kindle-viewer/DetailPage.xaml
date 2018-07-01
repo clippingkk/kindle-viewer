@@ -8,43 +8,48 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Grid
+        Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
+    >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
 
-    <StackPanel Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel VerticalAlignment="Center" Margin="30" Grid.Column="0">
+            <Image
+                HorizontalAlignment="Center"
+                Source="{x:Bind book.Image, Mode=OneWay}"
+                Width="270"
+                Height="382.5"
+                Stretch="Uniform"
+                />
             <TextBlock 
-                VerticalAlignment="Center"
                 Text="{x:Bind clipItem.title}"
-                FontSize="22"
-                Margin="20, 0, 0, 0"
+                HorizontalAlignment="Center"
+                Margin="0, 30, 0, 0"
+                FontSize="26"
+                FontWeight="Bold"
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+                />
+            <TextBlock Text="{x:Bind book.Author, Mode=OneWay}"
+                HorizontalAlignment="Center"
+            />
+            <HyperlinkButton
+                NavigateUri="{x:Bind book.EbookUrl, Mode=OneWay}"
+                HorizontalAlignment="Center"
+            >了解详情</HyperlinkButton>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" Grid.Column="1" Margin="0, 30, 30, 30">
+            <TextBlock
+                Margin="30"
+                Text="{x:Bind Path=clipItem.content}"
+                FontSize="46"
+                FontWeight="Light"
+                TextWrapping="Wrap"
             />
         </StackPanel>
-        <StackPanel Margin="30">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <Image
-                        HorizontalAlignment="Center"
-                        Source="{x:Bind book.Image, Mode=OneWay}"
-                        Width="270"
-                        Height="382.5"
-                        Stretch="Uniform"
-                        />
-                    <TextBlock 
-                        Text="{x:Bind clipItem.title}"
-                        HorizontalAlignment="Center"
-                        />
-                    <TextBlock Text="{x:Bind book.Author, Mode=OneWay}"
-                               HorizontalAlignment="Center"
-                               />
-                    <HyperlinkButton NavigateUri="{x:Bind book.EbookUrl, Mode=OneWay}">立即购买</HyperlinkButton>
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="{x:Bind Path=clipItem.content}" TextWrapping="Wrap" />
-                </StackPanel>
-            </Grid>
-        </StackPanel>
-    </StackPanel>
+    </Grid>
+
 </Page>
