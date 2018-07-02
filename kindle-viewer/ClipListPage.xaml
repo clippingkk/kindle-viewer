@@ -27,7 +27,7 @@
             x:Name="listView"
             ItemsSource="{x:Bind Collections}"
             SelectionChanged="listView_SelectionChanged"
-            Background="{StaticResource SystemControlAltMediumLowAcrylicElementMediumBrush}"
+            Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
             >
         <ListView.ItemTemplate>
                 <DataTemplate>
