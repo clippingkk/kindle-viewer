@@ -39,7 +39,10 @@
             <HyperlinkButton
                 NavigateUri="{x:Bind book.EbookUrl, Mode=OneWay}"
                 HorizontalAlignment="Center"
-            >了解详情</HyperlinkButton>
+                ToolTipService.ToolTip="{x:Bind book.EbookUrl, Mode=OneWay}"
+            >
+                了解详情
+            </HyperlinkButton>
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Grid.Column="1" Margin="0, 30, 30, 30">
             <TextBlock
