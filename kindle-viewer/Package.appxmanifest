@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="3271AnnatarHe.kindleviewer" Publisher="CN=C96EC80C-A32F-4AE7-9AA1-46FF68D2AC3E" Version="1.1.3.0" />
+  <Identity Name="3271AnnatarHe.kindleviewer" Publisher="CN=C96EC80C-A32F-4AE7-9AA1-46FF68D2AC3E" Version="1.1.4.0" />
   <mp:PhoneIdentity PhoneProductId="6676d307-cccb-4cb3-b033-c4a922353077" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>kindle viewer</DisplayName>

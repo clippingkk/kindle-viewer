@@ -26,14 +26,16 @@
                 x:Name="Tip"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Text="请把 clipings.txt 丢给上面的盒子" FontSize="36"
+                x:Uid="dropFiles"
+                FontSize="36"
             />
             <HyperlinkButton
                 NavigateUri="https://sspai.com/post/43180"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0, 20, 0, 0"
-            > 不知道文件在哪里？点我！</HyperlinkButton>
+                x:Uid="howToDrop"
+            />
 
             <StackPanel 
                 Orientation="Horizontal"
@@ -44,7 +46,8 @@
                 <HyperlinkButton 
                     NavigateUri="https://kindle.annatarhe.com"
                     Margin="0, 0, 100, 0"
-                >官方网站</HyperlinkButton>
+                    x:Uid="officeWebsite"
+                />
                 <TextBlock>
                     Copyright: AnnatarHe
                 </TextBlock>

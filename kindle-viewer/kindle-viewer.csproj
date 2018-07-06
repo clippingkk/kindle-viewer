@@ -124,6 +124,8 @@
     </AppxManifest>
     <None Include="kindle-viewer_StoreKey.pfx" />
     <None Include="kindle-viewer_TemporaryKey.pfx" />
+    <PRIResource Include="strings\zh-CN\Resources.resw" />
+    <PRIResource Include="strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LargeTile.scale-100.png" />
