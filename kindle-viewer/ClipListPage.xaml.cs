@@ -60,14 +60,14 @@ namespace kindle_viewer
                 return;
             }
 
-            ContentDialog locationPromptDialog = new ContentDialog
+            ContentDialog memAlert = new ContentDialog
             {
                 Title = "Memory Alert",
                 Content = "App might be crash after you scroll to very bottom, because your clips file so large",
                 CloseButtonText = "I know it",
             };
 
-            locationPromptDialog.ShowAsync();
+            memAlert.ShowAsync();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)

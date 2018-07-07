@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.Storage;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace kindle_viewer
@@ -34,10 +35,36 @@ namespace kindle_viewer
 
         private async void Grid_Drop(object sender, DragEventArgs e)
         {
-            List<ClipItem> clipItems = new List<ClipItem>();
             var storageItems = await e.DataView.GetStorageItemsAsync();
             StorageFile file = storageItems.First() as StorageFile;
+            var fileType = file.FileType.ToString().ToLower();
 
+            if (!fileType.Equals(".txt"))
+            {
+
+                ContentDialog fileTypeAlert = new ContentDialog
+                {
+                    Title = "兄弟，我要的是 txt 文件啊",
+                    Content = "你这个文件类型不对，把 kindle 里的 clipings.txt 丢给我啊喂! ",
+                    CloseButtonText = "老子知道了！",
+                };
+
+                await fileTypeAlert.ShowAsync();
+
+                return;
+            }
+
+            Debug.WriteLine(file.FileType.ToString());
+            var clipItems = await this.FileParser(file);
+
+            var f = Window.Current.Content as Frame;
+            f.Navigate(typeof(ClipListPage), clipItems);
+        }
+
+
+        private async Task<List<ClipItem>> FileParser(StorageFile file)
+        {
+            List<ClipItem> clipItems = new List<ClipItem>();
 
             using (var inputStream = await file.OpenReadAsync())
             using (var classicStream = inputStream.AsStreamForRead())
@@ -75,12 +102,10 @@ namespace kindle_viewer
                     currentLine++;
                 }
             }
-
-            var item = clipItems.ElementAt(3);
-            // Debug.WriteLine(item.content, item.title, item.author, item.location);
-            var f = Window.Current.Content as Frame;
-            f.Navigate(typeof(ClipListPage), clipItems);
+            return clipItems;
         }
+
+
 
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
