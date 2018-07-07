@@ -37,7 +37,7 @@ namespace kindle_viewer
     public sealed partial class ClipListPage : Page
     {
 
-        private ObservableCollection<ClipItem> Collections = new ObservableCollection<ClipItem>();
+        private ClipListObservable clipList = new ClipListObservable();
 
         public ClipListPage()
         {
@@ -48,19 +48,33 @@ namespace kindle_viewer
         {
             var list = (List<ClipItem>)e.Parameter;
 
-            foreach(var item in list)
+            this.clipList.setupClips(list);
+
+            this.memoryAlert(list.Count);
+        }
+
+        private void memoryAlert(int count)
+        {
+            if (count < 30000)
             {
-                this.Collections.Add(item);
+                return;
             }
 
-            Debug.WriteLine(this.Collections.Count);
+            ContentDialog locationPromptDialog = new ContentDialog
+            {
+                Title = "Memory Alert",
+                Content = "App might be crash after you scroll to very bottom, because your clips file so large",
+                CloseButtonText = "I know it",
+            };
+
+            locationPromptDialog.ShowAsync();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var f = Window.Current.Content as Frame;
             var index = (sender as ListView).SelectedIndex;
-            f.Navigate(typeof(DetailPage), this.Collections.ElementAt(index), new DrillInNavigationTransitionInfo());
+            f.Navigate(typeof(DetailPage), this.clipList.ElementAt(index), new DrillInNavigationTransitionInfo());
         }
     }
 

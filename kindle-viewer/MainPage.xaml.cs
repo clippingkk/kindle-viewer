@@ -78,11 +78,8 @@ namespace kindle_viewer
 
             var item = clipItems.ElementAt(3);
             // Debug.WriteLine(item.content, item.title, item.author, item.location);
-            Debug.WriteLine(item.toString());
-
             var f = Window.Current.Content as Frame;
             f.Navigate(typeof(ClipListPage), clipItems);
-
         }
 
         private void Grid_DragOver(object sender, DragEventArgs e)
