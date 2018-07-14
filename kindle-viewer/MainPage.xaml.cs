@@ -62,16 +62,16 @@ namespace kindle_viewer
         }
 
 
-        private async Task<List<ClipItem>> FileParser(StorageFile file)
+        private async Task<List<Model.ClippingItem>> FileParser(StorageFile file)
         {
-            List<ClipItem> clipItems = new List<ClipItem>();
+            List<Model.ClippingItem> clipItems = new List<Model.ClippingItem>();
 
             using (var inputStream = await file.OpenReadAsync())
             using (var classicStream = inputStream.AsStreamForRead())
             using (var streamReader = new StreamReader(classicStream))
             {
                 int currentLine = 1;
-                ClipItem clipItem = new ClipItem();
+                Model.ClippingItem clipItem = new Model.ClippingItem();
               
                 while (streamReader.Peek() >= 0)
                 {
@@ -79,7 +79,7 @@ namespace kindle_viewer
                     switch (currentLine % 5)
                     {
                         case 1:
-                            clipItem = new ClipItem();
+                            clipItem = new Model.ClippingItem();
                             var result = line.Split(' ');
                             clipItem.title = result.First();
                             clipItem.author = result.Last();

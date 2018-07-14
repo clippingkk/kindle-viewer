@@ -21,16 +21,6 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace kindle_viewer
 {
-    class ClipItem
-    {
-        public string title { get; set; }
-        public DateTime createdAt { get; set; }
-        public string content { get; set; }
-        public string location { get; set; }
-        public string author { get; set; }
-
-        public string toString() => $"{title}\n{content}\n{location}\n{author}\n{createdAt.ToString()}";
-    }
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -46,7 +36,7 @@ namespace kindle_viewer
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var list = (List<ClipItem>)e.Parameter;
+            var list = (List<Model.ClippingItem>)e.Parameter;
 
             this.clipList.setupClips(list);
 

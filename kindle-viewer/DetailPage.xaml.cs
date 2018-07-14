@@ -28,7 +28,7 @@ namespace kindle_viewer
     public sealed partial class DetailPage : Page
     {
 
-        private ClipItem clipItem;
+        private Model.ClippingItem clipItem;
         private SystemNavigationManager navigationManager;
         private DBBookInfo book { get; set; } = new DBBookInfo();
 
@@ -40,7 +40,7 @@ namespace kindle_viewer
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var clipItem = (ClipItem)e.Parameter;
+            var clipItem = (Model.ClippingItem)e.Parameter;
             this.clipItem = clipItem;
 
             this.navigationManager = SystemNavigationManager.GetForCurrentView();

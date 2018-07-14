@@ -31,7 +31,11 @@
             >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <RelativePanel Padding="20" Margin="30" Background="{StaticResource SystemControlAltMediumLowAcrylicElementMediumBrush}">
+                    <RelativePanel 
+                        Padding="20"
+                        Margin="30"
+                        Background="{StaticResource SystemControlAltMediumLowAcrylicElementMediumBrush}"
+                    >
                         <TextBlock
                             Text="{Binding content}"
                             Margin="0, 0, 50, 0"

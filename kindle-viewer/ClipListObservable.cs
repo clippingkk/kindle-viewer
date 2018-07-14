@@ -11,10 +11,10 @@ using System.Diagnostics;
 
 namespace kindle_viewer
 {
-    class ClipListObservable: ObservableCollection<ClipItem>, ISupportIncrementalLoading
+    class ClipListObservable: ObservableCollection<Model.ClippingItem>, ISupportIncrementalLoading
     {
 
-        private List<ClipItem> clipItems;
+        private List<Model.ClippingItem> clipItems;
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
@@ -30,7 +30,7 @@ namespace kindle_viewer
                     await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
                         Debug.WriteLine("load success");
-                        foreach (ClipItem clip in data)
+                        foreach (Model.ClippingItem clip in data)
                         {
                             this.Add(clip);
                         }
@@ -42,7 +42,7 @@ namespace kindle_viewer
             }).AsAsyncOperation<LoadMoreItemsResult>();
         }
 
-        public List<ClipItem> loadMore()
+        public List<Model.ClippingItem> loadMore()
         {
             if (!this.HasMoreItems)
             {
@@ -57,11 +57,11 @@ namespace kindle_viewer
             return data;
         }
 
-        public void setupClips(List<ClipItem> clips)
+        public void setupClips(List<Model.ClippingItem> clips)
         {
             this.clipItems = clips;
             var d = this.loadMore();
-            foreach (ClipItem clip in d)
+            foreach (Model.ClippingItem clip in d)
             {
                 this.Add(clip);
             }
