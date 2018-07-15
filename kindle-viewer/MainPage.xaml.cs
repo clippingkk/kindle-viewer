@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Windows.Storage;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using kindle_viewer.pages;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace kindle_viewer
@@ -110,6 +111,13 @@ namespace kindle_viewer
         private void Grid_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+        }
+
+        private void ToAuth(object sender, RoutedEventArgs e)
+        {
+            // navigate to login page
+            var f = Window.Current.Content as Frame;
+            f.Navigate(typeof(AuthContainer));
         }
 
     }

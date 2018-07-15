@@ -30,6 +30,13 @@
                 FontSize="36"
             />
             <HyperlinkButton
+                FontSize="24"
+                x:Uid="accountIn"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="ToAuth"
+            />
+            <HyperlinkButton
                 NavigateUri="https://sspai.com/post/43180"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

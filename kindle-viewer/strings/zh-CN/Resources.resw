@@ -117,16 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="accountIn.Content" xml:space="preserve">
+    <value>登陆 / 注册</value>
+  </data>
+  <data name="avatarTextbox.PlaceholderText" xml:space="preserve">
+    <value>头像的 url</value>
+  </data>
   <data name="detailLink.Content" xml:space="preserve">
     <value>了解详情</value>
+  </data>
+  <data name="doLogin.Content" xml:space="preserve">
+    <value>我要登陆</value>
+  </data>
+  <data name="doSignup.Content" xml:space="preserve">
+    <value>注册</value>
   </data>
   <data name="dropFiles.Text" xml:space="preserve">
     <value>把你的 `clipings.txt` 丢进盒子</value>
   </data>
+  <data name="emailTextbox.PlaceholderText" xml:space="preserve">
+    <value>你的邮箱写在这里</value>
+  </data>
+  <data name="exchangeToLogin.Content" xml:space="preserve">
+    <value>我有账号了</value>
+  </data>
+  <data name="exchangeToSignup.Content" xml:space="preserve">
+    <value>带我去注册</value>
+  </data>
   <data name="howToDrop.Content" xml:space="preserve">
     <value>不知道这个文件是啥？点我！</value>
   </data>
+  <data name="loginText.Text" xml:space="preserve">
+    <value>验证身份</value>
+  </data>
   <data name="officeWebsite.Content" xml:space="preserve">
     <value>官方网站</value>
+  </data>
+  <data name="pwdTextbox.PlaceholderText" xml:space="preserve">
+    <value>你的密码</value>
+  </data>
+  <data name="signupText.Text" xml:space="preserve">
+    <value>注册</value>
   </data>
 </root>

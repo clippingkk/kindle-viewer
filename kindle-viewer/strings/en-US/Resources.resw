@@ -117,16 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="accountIn.Content" xml:space="preserve">
+    <value>Login / Signup</value>
+  </data>
+  <data name="avatarTextbox.PlaceholderText" xml:space="preserve">
+    <value>your avatar url</value>
+  </data>
   <data name="detailLink.Content" xml:space="preserve">
     <value>Find more</value>
+  </data>
+  <data name="doLogin.Content" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="doSignup.Content" xml:space="preserve">
+    <value>Signup</value>
   </data>
   <data name="dropFiles.Text" xml:space="preserve">
     <value>Drop `clipings.txt` to the box above</value>
   </data>
+  <data name="emailTextbox.PlaceholderText" xml:space="preserve">
+    <value>type email here</value>
+  </data>
+  <data name="exchangeToLogin.Content" xml:space="preserve">
+    <value>I already have an account</value>
+  </data>
+  <data name="exchangeToSignup.Content" xml:space="preserve">
+    <value>I need to create an account</value>
+  </data>
   <data name="howToDrop.Content" xml:space="preserve">
     <value>I don't know what the file is. Click Me!</value>
   </data>
+  <data name="loginText.Text" xml:space="preserve">
+    <value>Auth</value>
+  </data>
   <data name="officeWebsite.Content" xml:space="preserve">
     <value>Office Website</value>
+  </data>
+  <data name="pwdTextbox.PlaceholderText" xml:space="preserve">
+    <value>type password here</value>
+  </data>
+  <data name="signupText.Text" xml:space="preserve">
+    <value>Signup</value>
   </data>
 </root>
