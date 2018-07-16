@@ -8,57 +8,44 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid
-        AllowDrop="True"
-        Drop="Grid_Drop"
-        DragOver="Grid_DragOver"
-        Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
-    >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <StackPanel Margin="0, 30, 0, 0" Grid.Row="0" VerticalAlignment="Center">
-            <Rectangle Width="700" Height="400" Fill="AliceBlue" />
-        </StackPanel>
-        <StackPanel Grid.Row="1">
-            <TextBlock
-                x:Name="Tip"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                x:Uid="dropFiles"
-                FontSize="36"
-            />
-            <HyperlinkButton
-                FontSize="24"
-                x:Uid="accountIn"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Click="ToAuth"
-            />
-            <HyperlinkButton
-                NavigateUri="https://sspai.com/post/43180"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Margin="0, 20, 0, 0"
-                x:Uid="howToDrop"
-            />
+    <NavigationView
+        ItemInvoked="NavigationView_ItemInvoked"
+        Loaded="NavigationView_Loaded"
+        x:Name="NavView"
+        >
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="DropText" Icon="ClearSelection" Tag="drop" />
+            <NavigationViewItemSeparator/>
+            <NavigationViewItemHeader Content="Social"/>
+            <NavigationViewItem Icon="Contact" Content="User" Tag="user" />
+            <NavigationViewItem Icon="OtherUser" Content="Square" Tag="square" />
+        </NavigationView.MenuItems>
 
-            <StackPanel 
-                Orientation="Horizontal"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                Margin="0, 50, 0, 0"
-            >
-                <HyperlinkButton 
-                    NavigateUri="https://kindle.annatarhe.com"
-                    Margin="0, 0, 100, 0"
-                    x:Uid="officeWebsite"
-                />
-                <TextBlock>
-                    Copyright: AnnatarHe
-                </TextBlock>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+        <NavigationView.HeaderTemplate>
+            <DataTemplate>
+                <Grid Margin="24,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        FontSize="28"
+                        VerticalAlignment="Center"
+                        Text="Header Title"
+                    />
+                </Grid>
+            </DataTemplate>
+        </NavigationView.HeaderTemplate>
+
+        <Frame x:Name="ContentFrame" Margin="24">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
+
+    </NavigationView>
+
 </Page>

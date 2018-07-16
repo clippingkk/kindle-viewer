@@ -17,6 +17,7 @@ using Windows.Storage;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using kindle_viewer.pages;
+using Windows.UI.Core;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace kindle_viewer
@@ -27,98 +28,53 @@ namespace kindle_viewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private SystemNavigationManager navigationManager;
 
+        private string PageTitle { get; set; } = "Weclome";
 
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        private async void Grid_Drop(object sender, DragEventArgs e)
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            var storageItems = await e.DataView.GetStorageItemsAsync();
-            StorageFile file = storageItems.First() as StorageFile;
-            var fileType = file.FileType.ToString().ToLower();
 
-            if (!fileType.Equals(".txt"))
+            if (args.IsSettingsInvoked)
             {
-
-                ContentDialog fileTypeAlert = new ContentDialog
-                {
-                    Title = "兄弟，我要的是 txt 文件啊",
-                    Content = "你这个文件类型不对，把 kindle 里的 clipings.txt 丢给我啊喂! ",
-                    CloseButtonText = "老子知道了！",
-                };
-
-                await fileTypeAlert.ShowAsync();
-
+                ContentFrame.Navigate(typeof(SettingPage));
                 return;
             }
 
-            Debug.WriteLine(file.FileType.ToString());
-            var clipItems = await this.FileParser(file);
 
-            var f = Window.Current.Content as Frame;
-            f.Navigate(typeof(ClipListPage), clipItems);
-        }
-
-
-        private async Task<List<Model.ClippingItem>> FileParser(StorageFile file)
-        {
-            List<Model.ClippingItem> clipItems = new List<Model.ClippingItem>();
-
-            using (var inputStream = await file.OpenReadAsync())
-            using (var classicStream = inputStream.AsStreamForRead())
-            using (var streamReader = new StreamReader(classicStream))
+            var navItemTag = NavView.MenuItems
+                .OfType<NavigationViewItem>()
+                .First(i => args.InvokedItem.Equals(i.Content))
+                .Tag.ToString();
+            switch (navItemTag)
             {
-                int currentLine = 1;
-                Model.ClippingItem clipItem = new Model.ClippingItem();
-              
-                while (streamReader.Peek() >= 0)
-                {
-                    var line = streamReader.ReadLine();
-                    switch (currentLine % 5)
-                    {
-                        case 1:
-                            clipItem = new Model.ClippingItem();
-                            var result = line.Split(' ');
-                            clipItem.title = result.First();
-                            clipItem.author = result.Last();
-                            break;
-                        case 2:
-                            var locationRegex = new Regex(@"Location (\d+-\d+)");
-                            clipItem.location = locationRegex.Match(line).Value;
-                            var dateTimeRegex = new Regex(@"(20.*) [A|P]M");
-                            var thatTimeString = dateTimeRegex.Match(line).Value;
-                            Debug.WriteLine(thatTimeString);
-                            // clipItem.createdAt = DateTime.Parse(thatTimeString);
-                            break;
-                        case 4:
-                            clipItem.content = line;
-                            break;
-                        case 0:
-                            clipItems.Add(clipItem);
-                            break;
-                    }
-                    currentLine++;
-                }
+                case "drop":
+                    ContentFrame.Navigate(typeof(DropText));
+                    PageTitle = "DropText";
+                    break;
+                case "user":
+                    ContentFrame.Navigate(typeof(AuthContainer));
+                    PageTitle = "Auth";
+                    break;
+                case "square":
+                    ContentFrame.Navigate(typeof(Square));
+                    PageTitle = "Square";
+                    break;
+                default:
+                    break;
             }
-            return clipItems;
         }
 
-
-
-        private void Grid_DragOver(object sender, DragEventArgs e)
+        private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+            ContentFrame.Navigate(typeof(AuthContainer));
+            PageTitle = "Auth";
         }
-
-        private void ToAuth(object sender, RoutedEventArgs e)
-        {
-            // navigate to login page
-            var f = Window.Current.Content as Frame;
-            f.Navigate(typeof(AuthContainer));
-        }
-
     }
 }

@@ -88,8 +88,8 @@ namespace kindle_viewer
             ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ForegroundColor = Colors.White;
-            titleBar.ButtonForegroundColor = Colors.White;
+            titleBar.ForegroundColor = Colors.Black;
+            titleBar.ButtonForegroundColor = Colors.Black;
             titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
 
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;

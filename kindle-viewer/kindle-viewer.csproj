@@ -122,6 +122,12 @@
     <Compile Include="pages\AuthContainer.xaml.cs">
       <DependentUpon>AuthContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Square.xaml.cs">
+      <DependentUpon>Square.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +211,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\AuthContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\Square.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
