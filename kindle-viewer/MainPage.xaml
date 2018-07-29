@@ -32,7 +32,7 @@
                         Style="{StaticResource TitleTextBlockStyle}"
                         FontSize="28"
                         VerticalAlignment="Center"
-                        Text="Header Title"
+                        Text="{Binding}"
                     />
                 </Grid>
             </DataTemplate>

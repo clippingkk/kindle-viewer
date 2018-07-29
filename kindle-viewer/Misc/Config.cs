@@ -9,5 +9,7 @@ namespace kindle_viewer.Misc
     class Config
     {
         public static string UrlPrefix { get { return "http://localhost:8989/api"; } }
+
+        public static string JWT { get; set; }
     }
 }

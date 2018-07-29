@@ -150,6 +150,9 @@
   <data name="loginText.Text" xml:space="preserve">
     <value>验证身份</value>
   </data>
+  <data name="notSupportYet.Text" xml:space="preserve">
+    <value>尚未开启此功能，请耐心等待哦~</value>
+  </data>
   <data name="officeWebsite.Content" xml:space="preserve">
     <value>官方网站</value>
   </data>

@@ -150,6 +150,9 @@
   <data name="loginText.Text" xml:space="preserve">
     <value>Auth</value>
   </data>
+  <data name="notSupportYet.Text" xml:space="preserve">
+    <value>This page not support yet. please wait for next release</value>
+  </data>
   <data name="officeWebsite.Content" xml:space="preserve">
     <value>Office Website</value>
   </data>

@@ -8,35 +8,29 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <StackPanel
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+    >
         <StackPanel
-            Width="auto"
-            Height="auto"
-            VerticalAlignment="Center"
+            Width="400"
+            Height="400"
             HorizontalAlignment="Center"
-            Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
+            VerticalAlignment="Center"
         >
-            <StackPanel Width="400" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                <TextBlock x:Uid="signupText" />
+            <TextBlock x:Uid="signupText" FontSize="32" Margin="0, 0, 0, 30" FontWeight="Light" />
 
-                <TextBox Text="{x:Bind Email, Mode=TwoWay}" x:Uid="emailTextbox" />
-                <TextBox Text="{x:Bind Pwd, Mode=TwoWay}" x:Uid="pwdTextBox" />
-                <TextBox Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox" />
+            <TextBox Text="{x:Bind Email, Mode=TwoWay}" x:Uid="emailTextbox" Margin="0,0,0, 30" />
+            <TextBox Text="{x:Bind Pwd, Mode=TwoWay}" x:Uid="pwdTextBox"  Margin="0,0,0, 30" />
+            <TextBox Visibility="{x:Bind AvatarUrlVisiblity}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />
 
-                <RelativePanel>
-                    <Button Click="DoSignup" x:Uid="doSignup" RelativePanel.AlignLeftWithPanel="True" />
-                    <Button Click="ToLogin" x:Uid="exchangeToLogin" RelativePanel.AlignRightWithPanel="True" />
-                </RelativePanel>
-            </StackPanel>
+            <RelativePanel>
+                <Button Click="DoSignup" x:Uid="doSignup" RelativePanel.AlignLeftWithPanel="True" />
+                <Button Click="ToLogin" x:Uid="exchangeToLogin" RelativePanel.AlignRightWithPanel="True" />
+            </RelativePanel>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 
 
 </Page>

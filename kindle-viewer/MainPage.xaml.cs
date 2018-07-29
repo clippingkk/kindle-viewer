@@ -30,7 +30,7 @@ namespace kindle_viewer
     {
         private SystemNavigationManager navigationManager;
 
-        private string PageTitle { get; set; } = "Weclome";
+        public string PageTitle { get; set; } = "Weclome";
 
         public MainPage()
         {
@@ -57,14 +57,17 @@ namespace kindle_viewer
                 case "drop":
                     ContentFrame.Navigate(typeof(DropText));
                     PageTitle = "DropText";
+                    NavView.Header = "Drop";
                     break;
                 case "user":
                     ContentFrame.Navigate(typeof(AuthContainer));
                     PageTitle = "Auth";
+                    NavView.Header = "Auth";
                     break;
                 case "square":
                     ContentFrame.Navigate(typeof(Square));
                     PageTitle = "Square";
+                    NavView.Header = "Square";
                     break;
                 default:
                     break;

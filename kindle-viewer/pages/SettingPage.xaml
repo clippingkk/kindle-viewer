@@ -9,6 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel>
-        <TextBlock>Setting</TextBlock>
+        <TextBlock x:Uid="notSupportYet"></TextBlock>
     </StackPanel>
 </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kindle_viewer.Misc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,8 +29,9 @@ namespace kindle_viewer.pages
         private string Email { get; set; }
         private string Pwd { get; set; }
         private string AvatarUrl { get; set; }
+        private bool hasError { get; set; }
+        private bool AvatarUrlVisiblity { get; set; }
 
-        private SystemNavigationManager navigationManager;
         public AuthContainer()
         {
             this.InitializeComponent();
@@ -37,40 +39,44 @@ namespace kindle_viewer.pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.navigationManager = SystemNavigationManager.GetForCurrentView();
-            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            this.navigationManager.BackRequested += this.onAppBarBackRequested;
-        }
-
-        private void onAppBarBackRequested(Object sender, BackRequestedEventArgs e)
-        {
-            var f = Window.Current.Content as Frame;
-            if (f.CanGoBack)
-            {
-                f.GoBack();
-            }
-            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            this.navigationManager.BackRequested -= this.onAppBarBackRequested;
         }
 
         private async void DoSignup(object sender, RoutedEventArgs e)
         {
 
-            HttpClient http = new HttpClient();
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            form.Add(new StringContent(Email), "email");
-            form.Add(new StringContent(Pwd), "pwd");
-            form.Add(new StringContent(AvatarUrl), "avatar");
+            var signupRequestData = new Model.HttpDataModel.AuthRequest
+            {
+                Email = Email,
+                Pwd = Pwd,
+                AvatarUrl = AvatarUrl
+            };
+            EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient();
+            http.Request.Accept = EasyHttp.Http.HttpContentTypes.ApplicationJson;
+            try
+            {
+                var res = http.Post(Misc.Config.UrlPrefix + "/auth/signup", signupRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
+                var result = res.DynamicBody;
 
-            HttpResponseMessage res = await http.PostAsync(Misc.Config.UrlPrefix + "/auth/signup", form);
-            res.EnsureSuccessStatusCode();
-            http.Dispose();
-            string result = res.Content.ReadAsStringAsync().Result;
+                if (result.status != 200)
+                {
+                    this.hasError = true;
+                }
+
+                var token = result.data.token;
+                Config.JWT = token;
+            }
+            catch (Exception err)
+            {
+                this.hasError = true;
+                SentryLogger.Log(err);
+
+            }
+
         }
 
         private void ToLogin(object sender, RoutedEventArgs e)
         {
-
+            AvatarUrlVisiblity = false;
         }
     }
 }
