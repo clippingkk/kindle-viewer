@@ -23,10 +23,10 @@
 
             <TextBox Text="{x:Bind Email, Mode=TwoWay}" x:Uid="emailTextbox" Margin="0,0,0, 30" />
             <TextBox Text="{x:Bind Pwd, Mode=TwoWay}" x:Uid="pwdTextBox"  Margin="0,0,0, 30" />
-            <TextBox Visibility="{x:Bind AvatarUrlVisiblity}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />
+            <TextBox Visibility="{x:Bind IsSignupMode}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />
 
             <RelativePanel>
-                <Button Click="DoSignup" x:Uid="doSignup" RelativePanel.AlignLeftWithPanel="True" />
+                <Button Click="DoAuth" x:Uid="doSignup" RelativePanel.AlignLeftWithPanel="True" />
                 <Button Click="ToLogin" x:Uid="exchangeToLogin" RelativePanel.AlignRightWithPanel="True" />
             </RelativePanel>
         </StackPanel>

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -15,7 +14,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-// using Windows.Web.Http;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,7 +28,7 @@ namespace kindle_viewer.pages
         private string Pwd { get; set; }
         private string AvatarUrl { get; set; }
         private bool hasError { get; set; }
-        private bool AvatarUrlVisiblity { get; set; }
+        private bool IsSignupMode { get; set; }
 
         public AuthContainer()
         {
@@ -41,29 +39,32 @@ namespace kindle_viewer.pages
         {
         }
 
-        private async void DoSignup(object sender, RoutedEventArgs e)
+        private void DoAuth(object sender, RoutedEventArgs e)
         {
-
-            var signupRequestData = new Model.HttpDataModel.AuthRequest
+            var signupRequestData = new Model.HttpDataModel.AuthSignupRequest
             {
                 Email = Email,
                 Pwd = Pwd,
-                AvatarUrl = AvatarUrl
+                AvatarUrl = "av",
+                Name = "name"
             };
-            EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient();
-            http.Request.Accept = EasyHttp.Http.HttpContentTypes.ApplicationJson;
+            EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
+            var url = String.Format("/auth/{0}", IsSignupMode ? "signup" : "login");
             try
             {
-                var res = http.Post(Misc.Config.UrlPrefix + "/auth/signup", signupRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
+                var res = http.Post(url, signupRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
                 var result = res.DynamicBody;
 
                 if (result.status != 200)
                 {
                     this.hasError = true;
+                    var err = new Exception(result.msg);
+                    throw err;
+                } else
+                {
+                    var token = result.data.token;
+                    Config.JWT = token;
                 }
-
-                var token = result.data.token;
-                Config.JWT = token;
             }
             catch (Exception err)
             {
@@ -76,7 +77,7 @@ namespace kindle_viewer.pages
 
         private void ToLogin(object sender, RoutedEventArgs e)
         {
-            AvatarUrlVisiblity = false;
+            IsSignupMode = false;
         }
     }
 }
