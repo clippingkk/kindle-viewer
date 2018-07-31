@@ -2,7 +2,6 @@
     x:Class="kindle_viewer.pages.AuthContainer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:kindle_viewer.pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -21,13 +20,14 @@
 
             <TextBlock x:Uid="signupText" FontSize="32" Margin="0, 0, 0, 30" FontWeight="Light" />
 
+            <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind Username, Mode=TwoWay}" x:Uid="emailTextbox" Margin="0,0,0, 30" />
             <TextBox Text="{x:Bind Email, Mode=TwoWay}" x:Uid="emailTextbox" Margin="0,0,0, 30" />
             <TextBox Text="{x:Bind Pwd, Mode=TwoWay}" x:Uid="pwdTextBox"  Margin="0,0,0, 30" />
-            <TextBox Visibility="{x:Bind IsSignupMode}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />
+            <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />
 
             <RelativePanel>
                 <Button Click="DoAuth" x:Uid="doSignup" RelativePanel.AlignLeftWithPanel="True" />
-                <Button Click="ToLogin" x:Uid="exchangeToLogin" RelativePanel.AlignRightWithPanel="True" />
+                <Button Click="ToggleMode" x:Uid="exchangeToLogin" RelativePanel.AlignRightWithPanel="True" />
             </RelativePanel>
         </StackPanel>
     </StackPanel>

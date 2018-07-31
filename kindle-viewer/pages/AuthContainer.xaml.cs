@@ -1,4 +1,5 @@
-﻿using kindle_viewer.Misc;
+﻿using kindle_viewer.Common;
+using kindle_viewer.Misc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +20,30 @@ using Windows.UI.Xaml.Navigation;
 
 namespace kindle_viewer.pages
 {
+    class AuthViewModel: BindableBase
+    {
+
+        private bool hasError;
+        private bool isSignupMode;
+        public bool HasError
+        {
+            get { return this.hasError; }
+            set
+            {
+                this.SetProperty(ref this.hasError, value);
+            }
+        }
+
+        public bool IsSignupMode
+        {
+            get { return this.isSignupMode; }
+            set
+            {
+                this.SetProperty(ref this.isSignupMode, value);
+            }
+        }
+
+    }
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -27,8 +52,8 @@ namespace kindle_viewer.pages
         private string Email { get; set; }
         private string Pwd { get; set; }
         private string AvatarUrl { get; set; }
-        private bool hasError { get; set; }
-        private bool IsSignupMode { get; set; }
+        private string Username { get; set; }
+        private AuthViewModel authViewModel { get; set; } = new AuthViewModel();
 
         public AuthContainer()
         {
@@ -49,7 +74,7 @@ namespace kindle_viewer.pages
                 Name = "name"
             };
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
-            var url = String.Format("/auth/{0}", IsSignupMode ? "signup" : "login");
+            var url = String.Format("/auth/{0}", this.authViewModel.IsSignupMode ? "signup" : "login");
             try
             {
                 var res = http.Post(url, signupRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
@@ -57,7 +82,7 @@ namespace kindle_viewer.pages
 
                 if (result.status != 200)
                 {
-                    this.hasError = true;
+                    this.authViewModel.HasError = true;
                     var err = new Exception(result.msg);
                     throw err;
                 } else
@@ -68,16 +93,16 @@ namespace kindle_viewer.pages
             }
             catch (Exception err)
             {
-                this.hasError = true;
+                this.authViewModel.HasError = true;
                 SentryLogger.Log(err);
 
             }
 
         }
 
-        private void ToLogin(object sender, RoutedEventArgs e)
+        private void ToggleMode(object sender, RoutedEventArgs e)
         {
-            IsSignupMode = false;
+            this.authViewModel.IsSignupMode = !this.authViewModel.IsSignupMode;
         }
     }
 }
