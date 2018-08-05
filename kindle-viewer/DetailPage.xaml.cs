@@ -65,7 +65,6 @@ namespace kindle_viewer
             var image = bookInfoData["image"].ToString();
             var ebookUrl = bookInfoData["ebook_url"] == null ? "https://AnnatarHe.com" : bookInfoData["ebook_url"].ToString();
 
-
             // var authors = bookInfoData["authors"].Children().ToArray().ToString();
             var authorsInData = bookInfoData["authors"];
 

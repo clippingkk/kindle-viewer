@@ -75,7 +75,7 @@ namespace kindle_viewer.pages
             };
             var loginRequestData = new Model.HttpDataModel.AuthLoginRequest { Email = Email, Pwd = Pwd };
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
-            var url = String.Format("/auth/{0}", this.authViewModel.IsSignupMode ? "signup" : "login");
+            var url = String.Format("/api/auth/{0}", this.authViewModel.IsSignupMode ? "signup" : "login");
             try
             {
                 var res = http.Post(url, this.authViewModel.IsSignupMode ? signupRequestData : loginRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);

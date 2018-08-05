@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using kindle_viewer.pages;
 using ClippingKKModel;
+using kindle_viewer.Misc;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -63,6 +64,9 @@ namespace kindle_viewer
                 await db.SaveChangesAsync();
             }
 
+            this.uploadToServer(clipItems);
+
+            // TODO: progress
             ContentDialog memAlert = new ContentDialog
             {
                 Title = "done",
@@ -121,6 +125,36 @@ namespace kindle_viewer
             return clipItems;
         }
 
+        private void uploadToServer(List<ClippingItem> clippings)
+        {
+            var offset = 0;
+            while (offset > clippings.Count())
+            {
+                var clips = clippings.Skip(offset).Take(20).ToList();
+                var uploadData = new List<Model.HttpDataModel.ClippingItemRequest>();
+                foreach (var clip in clips)
+                {
+                    var req = new Model.HttpDataModel.ClippingItemRequest
+                    {
+                        Title = clip.Title,
+                        Content = clip.Content,
+                        Location = clip.Location,
+                        BookID = "-1"
+                    };
+                    uploadData.Add(req);
+                }
+                this.upload(uploadData);
+                offset += 20;
+            }
+        }
+
+        private void upload(List<Model.HttpDataModel.ClippingItemRequest> clippingItemRequests)
+        {
+            EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
+            var url = String.Format("/api/clippings-multip");
+            http.Request.AddExtraHeader("jwt-token", Config.JWT);
+            http.Post(url, new { clippings = clippingItemRequests }, EasyHttp.Http.HttpContentTypes.ApplicationJson);
+        }
 
 
         private void Grid_DragOver(object sender, DragEventArgs e)

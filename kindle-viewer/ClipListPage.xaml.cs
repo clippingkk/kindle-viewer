@@ -52,12 +52,14 @@ namespace kindle_viewer
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
-            this.clipList.SetupClips();
 
-            this.navigationManager = SystemNavigationManager.GetForCurrentView();
-            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            this.navigationManager.BackRequested += this.onAppBarBackRequested;
+            this.clipList.SetupClips();
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                this.navigationManager = SystemNavigationManager.GetForCurrentView();
+                this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                this.navigationManager.BackRequested += this.onAppBarBackRequested;
+            }
         }
 
         private async void memoryAlert(int count)
