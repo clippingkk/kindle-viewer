@@ -253,6 +253,12 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClippingKKModel\ClippingKKModel\ClippingKKModel.csproj">
+      <Project>{e061c8ab-233a-48e2-8927-cc8ce1d2c28e}</Project>
+      <Name>ClippingKKModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

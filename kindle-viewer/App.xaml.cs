@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.EntityFrameworkCore;
+using ClippingKKModel;
 
 namespace kindle_viewer
 {
@@ -25,10 +26,10 @@ namespace kindle_viewer
             //this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            // using (var db = new ClippingContext())
-            // {
-            //    db.Database.Migrate();
-            // }
+            using (var db = new ClippingContext())
+            {
+                db.Migrate();
+            }
         }
 
         /// <summary>
