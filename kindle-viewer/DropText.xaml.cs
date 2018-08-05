@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using kindle_viewer.pages;
+using ClippingKKModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -56,21 +57,36 @@ namespace kindle_viewer
             Debug.WriteLine(file.FileType.ToString());
             var clipItems = await this.FileParser(file);
 
-            var f = Window.Current.Content as Frame;
-            f.Navigate(typeof(ClipListPage), clipItems);
+            using (var db = new ClippingContext())
+            {
+                await db.Clippings.AddRangeAsync(clipItems);
+                await db.SaveChangesAsync();
+            }
+
+            ContentDialog memAlert = new ContentDialog
+            {
+                Title = "done",
+                Content = "done",
+                CloseButtonText = "I know it",
+            };
+
+            await memAlert.ShowAsync();
+
+            // var f = Window.Current.Content as Frame;
+            // f.Navigate(typeof(ClipListPage));
         }
 
 
-        private async Task<List<Model.ClippingItem>> FileParser(StorageFile file)
+        private async Task<List<ClippingItem>> FileParser(StorageFile file)
         {
-            List<Model.ClippingItem> clipItems = new List<Model.ClippingItem>();
+            List<ClippingItem> clipItems = new List<ClippingItem>();
 
             using (var inputStream = await file.OpenReadAsync())
             using (var classicStream = inputStream.AsStreamForRead())
             using (var streamReader = new StreamReader(classicStream))
             {
                 int currentLine = 1;
-                Model.ClippingItem clipItem = new Model.ClippingItem();
+                ClippingItem clipItem = new ClippingItem();
               
                 while (streamReader.Peek() >= 0)
                 {
@@ -78,21 +94,21 @@ namespace kindle_viewer
                     switch (currentLine % 5)
                     {
                         case 1:
-                            clipItem = new Model.ClippingItem();
+                            clipItem = new ClippingItem();
                             var result = line.Split(' ');
-                            clipItem.title = result.First();
-                            clipItem.author = result.Last();
+                            clipItem.Title = result.First();
+                            clipItem.Author = result.Last();
                             break;
                         case 2:
                             var locationRegex = new Regex(@"Location (\d+-\d+)");
-                            clipItem.location = locationRegex.Match(line).Value;
+                            clipItem.Location = locationRegex.Match(line).Value;
                             var dateTimeRegex = new Regex(@"(20.*) [A|P]M");
                             var thatTimeString = dateTimeRegex.Match(line).Value;
                             Debug.WriteLine(thatTimeString);
                             // clipItem.createdAt = DateTime.Parse(thatTimeString);
                             break;
                         case 4:
-                            clipItem.content = line;
+                            clipItem.Content = line;
                             break;
                         case 0:
                             clipItems.Add(clipItem);
@@ -101,6 +117,7 @@ namespace kindle_viewer
                     currentLine++;
                 }
             }
+            clipItems.ForEach(i => i.DataId = Misc.Encrypt.Sha256(i.Content + i.Location));
             return clipItems;
         }
 
@@ -111,11 +128,5 @@ namespace kindle_viewer
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
         }
 
-        private void ToAuth(object sender, RoutedEventArgs e)
-        {
-            // navigate to login page
-            var f = Window.Current.Content as Frame;
-            f.Navigate(typeof(AuthContainer));
-        }
     }
 }

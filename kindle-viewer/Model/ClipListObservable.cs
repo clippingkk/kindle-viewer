@@ -8,29 +8,30 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using System.Diagnostics;
+using ClippingKKModel;
 
 namespace kindle_viewer
 {
-    class ClipListObservable: ObservableCollection<Model.ClippingItem>, ISupportIncrementalLoading
+    class ClipListObservable: ObservableCollection<ClippingItem>, ISupportIncrementalLoading
     {
 
-        private List<Model.ClippingItem> clipItems;
+        private ClippingContext clippingContext;
+        private int offset = 0;
+        private readonly int take = 20;
 
         public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
         {
-
             var dispatcher = Window.Current.Dispatcher;
 
             return Task.Run(async () =>
             {
-                var data = this.loadMore();
+                var data = this.LoadMore();
 
-                if (data != null && data.Count > 0)
+                if (data.Count > 0)
                 {
                     await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        Debug.WriteLine("load success");
-                        foreach (Model.ClippingItem clip in data)
+                        foreach (ClippingItem clip in data)
                         {
                             this.Add(clip);
                         }
@@ -42,31 +43,40 @@ namespace kindle_viewer
             }).AsAsyncOperation<LoadMoreItemsResult>();
         }
 
-        public List<Model.ClippingItem> loadMore()
+        public List<ClippingItem> LoadMore()
         {
             if (!this.HasMoreItems)
             {
-                return null;
+                return new List<ClippingItem>();
             }
 
-            var count = this.clipItems.Count >= 20 ? 20 : this.clipItems.Count;
-
-            var data = this.clipItems.Take(count).ToList();
-            this.clipItems.RemoveRange(0, count);
+            var data = this.clippingContext.Clippings.Skip(offset).Take(take).ToList();
+            offset += take;
 
             return data;
         }
 
-        public void setupClips(List<Model.ClippingItem> clips)
+        public void SetupClips()
         {
-            this.clipItems = clips;
-            var d = this.loadMore();
-            foreach (Model.ClippingItem clip in d)
+            var d = this.LoadMore();
+            var c = this.clippingContext.Clippings.Count();
+            foreach (ClippingItem clip in d)
             {
                 this.Add(clip);
             }
+
         }
 
-        public bool HasMoreItems => this.clipItems.Count > 0;
+        public ClipListObservable()
+        {
+            this.clippingContext = new ClippingContext();
+        }
+
+        ~ClipListObservable()
+        {
+            this.clippingContext.Dispose();
+        }
+
+        public bool HasMoreItems => offset < this.clippingContext.Clippings.Count();
     }
 }

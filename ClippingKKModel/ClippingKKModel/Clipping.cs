@@ -26,5 +26,6 @@ namespace ClippingKKModel
         public string Content { get; set; }
         public string Location { get; set; }
         public string Author { get; set; }
+        public string DataId { get; set; }
     }
 }

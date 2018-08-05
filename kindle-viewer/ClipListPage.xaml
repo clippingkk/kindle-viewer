@@ -37,7 +37,7 @@
                         Background="{StaticResource SystemControlAltMediumLowAcrylicElementMediumBrush}"
                     >
                         <TextBlock
-                            Text="{Binding content}"
+                            Text="{Binding Content}"
                             Margin="0, 0, 50, 0"
                             FontSize="46"
                             Name="content"
@@ -47,7 +47,7 @@
                             Foreground="Black"
                             />
                         <TextBlock
-                            Text="{Binding title}"
+                            Text="{Binding Title}"
                             TextAlignment="Right"
                             RelativePanel.Below="content"
                             RelativePanel.AlignRightWithPanel="True"
@@ -57,7 +57,7 @@
                             Foreground="Black"
                             />
                         <TextBlock 
-                            Text="{Binding author}"
+                            Text="{Binding Author}"
                             TextAlignment="Right"
                             RelativePanel.Below="title"
                             RelativePanel.AlignRightWithPanel="True"

@@ -14,11 +14,12 @@
         x:Name="NavView"
         >
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="所有书摘" Icon="ClearSelection" Tag="clippings" />
+            <NavigationViewItem Content="所有书摘" Icon="AlignLeft" Tag="clippings" />
             <NavigationViewItemSeparator/>
             <NavigationViewItemHeader Content="Social"/>
             <NavigationViewItem Icon="Contact" Content="User" Tag="user" />
             <NavigationViewItem Icon="OtherUser" Content="Square" Tag="square" />
+            <NavigationViewItem Content="Reupload" Icon="ClearSelection" Tag="reupload" />
         </NavigationView.MenuItems>
 
         <NavigationView.HeaderTemplate>

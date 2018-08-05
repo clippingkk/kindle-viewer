@@ -17,6 +17,7 @@ using System.Diagnostics;
 using Windows.UI.Xaml.Media.Imaging;
 using kindle_viewer.Model;
 using Windows.UI.Core;
+using ClippingKKModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,7 +29,7 @@ namespace kindle_viewer
     public sealed partial class DetailPage : Page
     {
 
-        private Model.ClippingItem clipItem;
+        private ClippingItem clipItem;
         private SystemNavigationManager navigationManager;
         private DBBookInfo book { get; set; } = new DBBookInfo();
 
@@ -39,7 +40,7 @@ namespace kindle_viewer
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var clipItem = (Model.ClippingItem)e.Parameter;
+            var clipItem = (ClippingItem)e.Parameter;
             this.clipItem = clipItem;
 
             this.navigationManager = SystemNavigationManager.GetForCurrentView();
@@ -62,7 +63,7 @@ namespace kindle_viewer
         private async Task<String> LoadBookInfo()
         {
             String jsonString;
-            var title = this.clipItem.title;
+            var title = this.clipItem.Title;
             if (title.Contains("(") && title.Contains(")"))
             {
                 title = title.Split('(')[0];

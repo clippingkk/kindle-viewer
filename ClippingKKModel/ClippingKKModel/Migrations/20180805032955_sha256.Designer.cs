@@ -3,14 +3,16 @@ using System;
 using ClippingKKModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClippingKKModel.Migrations
 {
     [DbContext(typeof(ClippingContext))]
-    partial class ClippingContextModelSnapshot : ModelSnapshot
+    [Migration("20180805032955_sha256")]
+    partial class sha256
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -48,11 +48,8 @@ namespace kindle_viewer
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var list = (List<Model.ClippingItem>)e.Parameter;
-
-            this.clipList.setupClips(list);
-
-            this.memoryAlert(list.Count);
+            
+            this.clipList.SetupClips();
 
             this.navigationManager = SystemNavigationManager.GetForCurrentView();
             this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;

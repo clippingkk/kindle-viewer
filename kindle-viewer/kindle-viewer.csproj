@@ -102,6 +102,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Misc\Encrypt.cs" />
     <Compile Include="Model\ClipListObservable.cs" />
     <Compile Include="ClipListPage.xaml.cs">
       <DependentUpon>ClipListPage.xaml</DependentUpon>

@@ -29,13 +29,10 @@ namespace kindle_viewer
     public sealed partial class MainPage : Page
     {
 
-        public string PageTitle { get; set; } = "Weclome";
-
         public MainPage()
         {
             this.InitializeComponent();
         }
-
 
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
@@ -46,27 +43,27 @@ namespace kindle_viewer
                 return;
             }
 
-
             var navItemTag = NavView.MenuItems
                 .OfType<NavigationViewItem>()
                 .First(i => args.InvokedItem.Equals(i.Content))
                 .Tag.ToString();
+            var windowFrame = Window.Current.Content as Frame;
             switch (navItemTag)
             {
                 case "clippings":
-                    ContentFrame.Navigate(typeof(DropText));
-                    PageTitle = "Clippings";
-                    NavView.Header = "Clippings";
+                    windowFrame.Navigate(typeof(ClipListPage));
                     break;
                 case "user":
                     ContentFrame.Navigate(typeof(AuthContainer));
-                    PageTitle = "Auth";
                     NavView.Header = "Auth";
                     break;
                 case "square":
                     ContentFrame.Navigate(typeof(Square));
-                    PageTitle = "Square";
                     NavView.Header = "Square";
+                    break;
+                case "reupload":
+                    ContentFrame.Navigate(typeof(DropText));
+                    NavView.Header = "Reupload";
                     break;
                 default:
                     break;
@@ -76,7 +73,7 @@ namespace kindle_viewer
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
             ContentFrame.Navigate(typeof(AuthContainer));
-            PageTitle = "Auth";
+            NavView.Header = "Auth";
         }
     }
 }

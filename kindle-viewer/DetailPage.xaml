@@ -25,7 +25,7 @@
                 Stretch="Uniform"
                 />
             <TextBlock 
-                Text="{x:Bind clipItem.title}"
+                Text="{x:Bind  clipItem.Title}"
                 HorizontalAlignment="Center"
                 Margin="0, 30, 0, 0"
                 FontSize="26"
@@ -46,7 +46,7 @@
         <StackPanel VerticalAlignment="Center" Grid.Column="1" Margin="0, 30, 30, 30">
             <TextBlock
                 Margin="30"
-                Text="{x:Bind Path=clipItem.content}"
+                Text="{x:Bind Path=clipItem.Content}"
                 FontSize="46"
                 FontWeight="Light"
                 TextWrapping="Wrap"
