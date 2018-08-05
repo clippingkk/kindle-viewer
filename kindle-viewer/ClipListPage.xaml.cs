@@ -42,6 +42,10 @@ namespace kindle_viewer
             {
                 f.GoBack();
             }
+            if (f.BackStackDepth > 0)
+            {
+                return;
+            }
             this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             this.navigationManager.BackRequested -= this.onAppBarBackRequested;
         }

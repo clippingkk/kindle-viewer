@@ -30,7 +30,6 @@ namespace kindle_viewer
     {
 
         private ClippingItem clipItem;
-        private SystemNavigationManager navigationManager;
         private DBBookInfo book { get; set; } = new DBBookInfo();
 
         public DetailPage()
@@ -42,22 +41,7 @@ namespace kindle_viewer
         {
             var clipItem = (ClippingItem)e.Parameter;
             this.clipItem = clipItem;
-
-            this.navigationManager = SystemNavigationManager.GetForCurrentView();
-            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            this.navigationManager.BackRequested += this.onAppBarBackRequested;
             LoadBookInfo();
-        }
-
-        private void onAppBarBackRequested(Object sender, BackRequestedEventArgs e)
-        {
-            var f = Window.Current.Content as Frame;
-            if (f.CanGoBack)
-            {
-                f.GoBack();
-            }
-            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            this.navigationManager.BackRequested -= this.onAppBarBackRequested;
         }
 
         private async Task<String> LoadBookInfo()
