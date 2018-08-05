@@ -70,14 +70,15 @@ namespace kindle_viewer.pages
             {
                 Email = Email,
                 Pwd = Pwd,
-                AvatarUrl = "av",
-                Name = "name"
+                AvatarUrl = AvatarUrl,
+                Name = Username
             };
+            var loginRequestData = new Model.HttpDataModel.AuthLoginRequest { Email = Email, Pwd = Pwd };
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
             var url = String.Format("/auth/{0}", this.authViewModel.IsSignupMode ? "signup" : "login");
             try
             {
-                var res = http.Post(url, signupRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
+                var res = http.Post(url, this.authViewModel.IsSignupMode ? signupRequestData : loginRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
                 var result = res.DynamicBody;
 
                 if (result.status != 200)
@@ -95,7 +96,6 @@ namespace kindle_viewer.pages
             {
                 this.authViewModel.HasError = true;
                 SentryLogger.Log(err);
-
             }
 
         }

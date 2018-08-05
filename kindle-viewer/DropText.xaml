@@ -11,7 +11,6 @@
         AllowDrop="True"
         Drop="Grid_Drop"
         DragOver="Grid_DragOver"
-        Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
     >
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
@@ -27,13 +26,6 @@
                 VerticalAlignment="Center"
                 x:Uid="dropFiles"
                 FontSize="36"
-            />
-            <HyperlinkButton
-                FontSize="24"
-                x:Uid="accountIn"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Click="ToAuth"
             />
             <HyperlinkButton
                 NavigateUri="https://sspai.com/post/43180"

@@ -28,7 +28,6 @@ namespace kindle_viewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private SystemNavigationManager navigationManager;
 
         public string PageTitle { get; set; } = "Weclome";
 
@@ -54,10 +53,10 @@ namespace kindle_viewer
                 .Tag.ToString();
             switch (navItemTag)
             {
-                case "drop":
+                case "clippings":
                     ContentFrame.Navigate(typeof(DropText));
-                    PageTitle = "DropText";
-                    NavView.Header = "Drop";
+                    PageTitle = "Clippings";
+                    NavView.Header = "Clippings";
                     break;
                 case "user":
                     ContentFrame.Navigate(typeof(AuthContainer));

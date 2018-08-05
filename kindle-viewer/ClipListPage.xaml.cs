@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Core;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -26,12 +27,23 @@ namespace kindle_viewer
     /// </summary>
     public sealed partial class ClipListPage : Page
     {
-
+        private SystemNavigationManager navigationManager;
         private ClipListObservable clipList = new ClipListObservable();
 
         public ClipListPage()
         {
             this.InitializeComponent();
+        }
+
+        private void onAppBarBackRequested(Object sender, BackRequestedEventArgs e)
+        {
+            var f = Window.Current.Content as Frame;
+            if (f.CanGoBack)
+            {
+                f.GoBack();
+            }
+            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            this.navigationManager.BackRequested -= this.onAppBarBackRequested;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -41,9 +53,13 @@ namespace kindle_viewer
             this.clipList.setupClips(list);
 
             this.memoryAlert(list.Count);
+
+            this.navigationManager = SystemNavigationManager.GetForCurrentView();
+            this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            this.navigationManager.BackRequested += this.onAppBarBackRequested;
         }
 
-        private void memoryAlert(int count)
+        private async void memoryAlert(int count)
         {
             if (count < 30000)
             {
@@ -57,7 +73,7 @@ namespace kindle_viewer
                 CloseButtonText = "I know it",
             };
 
-            memAlert.ShowAsync();
+            await memAlert.ShowAsync();
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)

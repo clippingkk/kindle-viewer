@@ -37,7 +37,6 @@ namespace kindle_viewer
             this.InitializeComponent();
         }
 
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var clipItem = (Model.ClippingItem)e.Parameter;
@@ -59,8 +58,6 @@ namespace kindle_viewer
             this.navigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             this.navigationManager.BackRequested -= this.onAppBarBackRequested;
         }
-
-
 
         private async Task<String> LoadBookInfo()
         {
