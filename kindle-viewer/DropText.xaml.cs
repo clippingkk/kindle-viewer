@@ -125,7 +125,8 @@ namespace kindle_viewer {
 
         private void uploadToServer(List<ClippingItem> clippings) {
             var offset = 0;
-            while (offset > clippings.Count()) {
+            var db = new ClippingContext();
+            while (offset < clippings.Count()) {
                 var clips = clippings.Skip(offset).Take(20).ToList();
                 var uploadData = new List<Model.HttpDataModel.ClippingItemRequest>();
                 foreach (var clip in clips) {
@@ -136,17 +137,16 @@ namespace kindle_viewer {
                         BookID = "-1"
                     };
 
-                    using (var db = new ClippingContext()) {
-                        var isInDB = db.Clippings.Any(x => x.DataId == clip.DataId);
-                        if (!isInDB) {
-                            uploadData.Add(req);
-                        }
+                    var isInDB = db.Clippings.Any(x => x.DataId == clip.DataId);
+                    if (!isInDB) {
+                        uploadData.Add(req);
                     }
                 }
 
                 this.upload(uploadData);
                 offset += 20;
             }
+            db.Dispose();
         }
 
         private void upload(List<Model.HttpDataModel.ClippingItemRequest> clippingItemRequests) {
@@ -154,9 +154,14 @@ namespace kindle_viewer {
                 return;
             }
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
-            var url = String.Format("/api/clippings-multip");
+            var url = String.Format("/clippings-multip");
             http.Request.AddExtraHeader("jwt-token", Config.JWT);
-            http.Post(url, new { clippings = clippingItemRequests }, EasyHttp.Http.HttpContentTypes.ApplicationJson);
+            try {
+                var res = http.Post(url, new { clippings = clippingItemRequests }, EasyHttp.Http.HttpContentTypes.ApplicationJson);
+                var results = res.DynamicBody;
+            } catch (Exception err) {
+                SentryLogger.Log(err);
+            }
         }
 
 
