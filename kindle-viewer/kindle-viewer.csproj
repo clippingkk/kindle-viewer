@@ -125,6 +125,9 @@
     <Compile Include="pages\AuthContainer.xaml.cs">
       <DependentUpon>AuthContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\Profile.xaml.cs">
+      <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\AuthContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\Profile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -55,7 +55,7 @@ namespace kindle_viewer
                     break;
                 case "user":
                     ContentFrame.Navigate(typeof(AuthContainer));
-                    NavView.Header = "Auth";
+                    NavView.Header = "Profile";
                     break;
                 case "square":
                     ContentFrame.Navigate(typeof(Square));

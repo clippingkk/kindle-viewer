@@ -22,29 +22,33 @@ using kindle_viewer.Misc;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace kindle_viewer
-{
+namespace kindle_viewer {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DropText : Page
-    {
-        public DropText()
-        {
+    public sealed partial class DropText : Page {
+        public DropText() {
             this.InitializeComponent();
         }
 
-        private async void Grid_Drop(object sender, DragEventArgs e)
-        {
+        private async void Grid_Drop(object sender, DragEventArgs e) {
+            if (Config.JWT == "") {
+                ContentDialog fileTypeAlert = new ContentDialog {
+                    Title = "请先登录哦",
+                    Content = "请先登录哦",
+                    CloseButtonText = "老子知道了！",
+                };
+
+                await fileTypeAlert.ShowAsync();
+                return;
+            }
             var storageItems = await e.DataView.GetStorageItemsAsync();
             StorageFile file = storageItems.First() as StorageFile;
             var fileType = file.FileType.ToString().ToLower();
 
-            if (!fileType.Equals(".txt"))
-            {
+            if (!fileType.Equals(".txt")) {
 
-                ContentDialog fileTypeAlert = new ContentDialog
-                {
+                ContentDialog fileTypeAlert = new ContentDialog {
                     Title = "兄弟，我要的是 txt 文件啊",
                     Content = "你这个文件类型不对，把 kindle 里的 clipings.txt 丢给我啊喂! ",
                     CloseButtonText = "老子知道了！",
@@ -58,17 +62,15 @@ namespace kindle_viewer
             Debug.WriteLine(file.FileType.ToString());
             var clipItems = await this.FileParser(file);
 
-            using (var db = new ClippingContext())
-            {
+            this.uploadToServer(clipItems);
+            using (var db = new ClippingContext()) {
                 await db.Clippings.AddRangeAsync(clipItems);
                 await db.SaveChangesAsync();
             }
 
-            this.uploadToServer(clipItems);
 
             // TODO: progress
-            ContentDialog memAlert = new ContentDialog
-            {
+            ContentDialog memAlert = new ContentDialog {
                 Title = "done",
                 Content = "done",
                 CloseButtonText = "I know it",
@@ -81,22 +83,18 @@ namespace kindle_viewer
         }
 
 
-        private async Task<List<ClippingItem>> FileParser(StorageFile file)
-        {
+        private async Task<List<ClippingItem>> FileParser(StorageFile file) {
             List<ClippingItem> clipItems = new List<ClippingItem>();
 
             using (var inputStream = await file.OpenReadAsync())
             using (var classicStream = inputStream.AsStreamForRead())
-            using (var streamReader = new StreamReader(classicStream))
-            {
+            using (var streamReader = new StreamReader(classicStream)) {
                 int currentLine = 1;
                 ClippingItem clipItem = new ClippingItem();
-              
-                while (streamReader.Peek() >= 0)
-                {
+
+                while (streamReader.Peek() >= 0) {
                     var line = streamReader.ReadLine();
-                    switch (currentLine % 5)
-                    {
+                    switch (currentLine % 5) {
                         case 1:
                             clipItem = new ClippingItem();
                             var result = line.Split(' ');
@@ -125,31 +123,36 @@ namespace kindle_viewer
             return clipItems;
         }
 
-        private void uploadToServer(List<ClippingItem> clippings)
-        {
+        private void uploadToServer(List<ClippingItem> clippings) {
             var offset = 0;
-            while (offset > clippings.Count())
-            {
+            while (offset > clippings.Count()) {
                 var clips = clippings.Skip(offset).Take(20).ToList();
                 var uploadData = new List<Model.HttpDataModel.ClippingItemRequest>();
-                foreach (var clip in clips)
-                {
-                    var req = new Model.HttpDataModel.ClippingItemRequest
-                    {
+                foreach (var clip in clips) {
+                    var req = new Model.HttpDataModel.ClippingItemRequest {
                         Title = clip.Title,
                         Content = clip.Content,
                         Location = clip.Location,
                         BookID = "-1"
                     };
-                    uploadData.Add(req);
+
+                    using (var db = new ClippingContext()) {
+                        var isInDB = db.Clippings.Any(x => x.DataId == clip.DataId);
+                        if (!isInDB) {
+                            uploadData.Add(req);
+                        }
+                    }
                 }
+
                 this.upload(uploadData);
                 offset += 20;
             }
         }
 
-        private void upload(List<Model.HttpDataModel.ClippingItemRequest> clippingItemRequests)
-        {
+        private void upload(List<Model.HttpDataModel.ClippingItemRequest> clippingItemRequests) {
+            if (clippingItemRequests.Count == 0) {
+                return;
+            }
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
             var url = String.Format("/api/clippings-multip");
             http.Request.AddExtraHeader("jwt-token", Config.JWT);
@@ -157,8 +160,7 @@ namespace kindle_viewer
         }
 
 
-        private void Grid_DragOver(object sender, DragEventArgs e)
-        {
+        private void Grid_DragOver(object sender, DragEventArgs e) {
             e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
         }
 

@@ -18,27 +18,21 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace kindle_viewer.pages
-{
-    class AuthViewModel: BindableBase
-    {
+namespace kindle_viewer.pages {
+    class AuthViewModel : BindableBase {
 
         private bool hasError;
         private bool isSignupMode;
-        public bool HasError
-        {
+        public bool HasError {
             get { return this.hasError; }
-            set
-            {
+            set {
                 this.SetProperty(ref this.hasError, value);
             }
         }
 
-        public bool IsSignupMode
-        {
+        public bool IsSignupMode {
             get { return this.isSignupMode; }
-            set
-            {
+            set {
                 this.SetProperty(ref this.isSignupMode, value);
             }
         }
@@ -47,27 +41,23 @@ namespace kindle_viewer.pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AuthContainer : Page
-    {
+    public sealed partial class AuthContainer : Page {
         private string Email { get; set; }
         private string Pwd { get; set; }
         private string AvatarUrl { get; set; }
         private string Username { get; set; }
         private AuthViewModel authViewModel { get; set; } = new AuthViewModel();
 
-        public AuthContainer()
-        {
+        public AuthContainer() {
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
+        protected override void OnNavigatedTo(NavigationEventArgs e) {
+            toProfileCheck();
         }
 
-        private void DoAuth(object sender, RoutedEventArgs e)
-        {
-            var signupRequestData = new Model.HttpDataModel.AuthSignupRequest
-            {
+        private void DoAuth(object sender, RoutedEventArgs e) {
+            var signupRequestData = new Model.HttpDataModel.AuthSignupRequest {
                 Email = Email,
                 Pwd = Pwd,
                 AvatarUrl = AvatarUrl,
@@ -75,34 +65,36 @@ namespace kindle_viewer.pages
             };
             var loginRequestData = new Model.HttpDataModel.AuthLoginRequest { Email = Email, Pwd = Pwd };
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
-            var url = String.Format("/api/auth/{0}", this.authViewModel.IsSignupMode ? "signup" : "login");
-            try
-            {
+            var url = String.Format("/auth/{0}", this.authViewModel.IsSignupMode ? "signup" : "login");
+            try {
                 var res = http.Post(url, this.authViewModel.IsSignupMode ? signupRequestData : loginRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
                 var result = res.DynamicBody;
 
-                if (result.status != 200)
-                {
+                if (result.status != 200) {
                     this.authViewModel.HasError = true;
                     var err = new Exception(result.msg);
                     throw err;
-                } else
-                {
-                    var token = result.data.token;
-                    Config.JWT = token;
                 }
-            }
-            catch (Exception err)
-            {
+                var token = result.data.token;
+                Config.JWT = token;
+                toProfileCheck();
+            } catch (Exception err) {
                 this.authViewModel.HasError = true;
                 SentryLogger.Log(err);
             }
-
         }
 
-        private void ToggleMode(object sender, RoutedEventArgs e)
-        {
+        private void toProfileCheck() {
+            if (Config.JWT == "") {
+                return;
+            }
+            var parentFrame = this.Frame;
+            parentFrame.Navigate(typeof(Profile));
+        }
+
+        private void ToggleMode(object sender, RoutedEventArgs e) {
             this.authViewModel.IsSignupMode = !this.authViewModel.IsSignupMode;
+            DoActionBtn.Content = this.authViewModel.IsSignupMode ? "Signup" : "Login";
         }
     }
 }

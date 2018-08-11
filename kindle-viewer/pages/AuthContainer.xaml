@@ -26,7 +26,7 @@
             <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />
 
             <RelativePanel>
-                <Button Click="DoAuth" x:Uid="doSignup" RelativePanel.AlignLeftWithPanel="True" />
+                <Button Click="DoAuth" x:Uid="doSignup" x:Name="DoActionBtn" RelativePanel.AlignLeftWithPanel="True" />
                 <Button Click="ToggleMode" x:Uid="exchangeToLogin" RelativePanel.AlignRightWithPanel="True" />
             </RelativePanel>
         </StackPanel>
