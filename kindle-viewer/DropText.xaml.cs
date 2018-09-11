@@ -33,13 +33,9 @@ namespace kindle_viewer {
 
         private async void Grid_Drop(object sender, DragEventArgs e) {
             if (Config.JWT == "") {
-                ContentDialog fileTypeAlert = new ContentDialog {
-                    Title = "请先登录哦",
-                    Content = "请先登录哦",
-                    CloseButtonText = "老子知道了！",
-                };
+                var loginAlert = new Dialogs.LoginAlert();
 
-                await fileTypeAlert.ShowAsync();
+                await loginAlert.ShowAsync();
                 return;
             }
             var storageItems = await e.DataView.GetStorageItemsAsync();
@@ -71,15 +67,13 @@ namespace kindle_viewer {
 
             // TODO: progress
             ContentDialog memAlert = new ContentDialog {
-                Title = "done",
-                Content = "done",
-                CloseButtonText = "I know it",
+                Title = "完成啦",
+                Content = "哇，加载成功啦。 可以去列表页看你的剪切了",
+                CloseButtonText = "老子知道了",
             };
 
             await memAlert.ShowAsync();
 
-            // var f = Window.Current.Content as Frame;
-            // f.Navigate(typeof(ClipListPage));
         }
 
 

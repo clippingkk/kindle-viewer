@@ -147,6 +147,12 @@
   <data name="howToDrop.Content" xml:space="preserve">
     <value>I don't know what the file is. Click Me!</value>
   </data>
+  <data name="LoginAlert.PrimaryButtonText" xml:space="preserve">
+    <value>I Know</value>
+  </data>
+  <data name="LoginAlert.Title" xml:space="preserve">
+    <value>Login Please</value>
+  </data>
   <data name="loginText.Text" xml:space="preserve">
     <value>Auth</value>
   </data>

@@ -8,7 +8,16 @@ namespace kindle_viewer.Misc
 {
     class Config
     {
-        public static string UrlPrefix { get { return "http://localhost:8989/api"; } }
+        public static string UrlPrefix {
+            get {
+#if DEBUG
+                return "http://api.clippingkk.annatarhe.com/api";
+                // return "http://localhost:9654/api";
+#else
+                return "http://api.clippingkk.annatarhe.com/api";
+#endif
+            }
+        }
 
         public static string JWT { get; set; }
     }

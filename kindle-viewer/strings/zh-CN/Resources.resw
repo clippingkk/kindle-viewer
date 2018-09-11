@@ -147,6 +147,12 @@
   <data name="howToDrop.Content" xml:space="preserve">
     <value>不知道这个文件是啥？点我！</value>
   </data>
+  <data name="LoginAlert.PrimaryButtonText" xml:space="preserve">
+    <value>老子知道了</value>
+  </data>
+  <data name="LoginAlert.Title" xml:space="preserve">
+    <value>等先登陆哦</value>
+  </data>
   <data name="loginText.Text" xml:space="preserve">
     <value>验证身份</value>
   </data>

@@ -102,6 +102,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\LoginAlert.xaml.cs">
+      <DependentUpon>LoginAlert.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Misc\Encrypt.cs" />
     <Compile Include="Model\ClipListObservable.cs" />
     <Compile Include="ClipListPage.xaml.cs">
@@ -207,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\LoginAlert.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
