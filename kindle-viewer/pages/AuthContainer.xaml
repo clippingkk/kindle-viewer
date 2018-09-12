@@ -20,7 +20,7 @@
 
             <TextBlock x:Uid="signupText" FontSize="32" Margin="0, 0, 0, 30" FontWeight="Light" />
 
-            <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind Username, Mode=TwoWay}" x:Uid="emailTextbox" Margin="0,0,0, 30" />
+            <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind Username, Mode=TwoWay}" x:Uid="usernameTextbox" Margin="0,0,0, 30" />
             <TextBox Text="{x:Bind Email, Mode=TwoWay}" x:Uid="emailTextbox" Margin="0,0,0, 30" />
             <TextBox Text="{x:Bind Pwd, Mode=TwoWay}" x:Uid="pwdTextBox"  Margin="0,0,0, 30" />
             <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />

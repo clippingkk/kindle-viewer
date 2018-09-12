@@ -168,4 +168,7 @@
   <data name="signupText.Text" xml:space="preserve">
     <value>Signup</value>
   </data>
+  <data name="usernameTextbox.PlaceholderText" xml:space="preserve">
+    <value>your username</value>
+  </data>
 </root>
