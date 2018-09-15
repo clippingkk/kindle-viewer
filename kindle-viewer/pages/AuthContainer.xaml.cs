@@ -52,10 +52,6 @@ namespace kindle_viewer.pages {
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e) {
-            toProfileCheck();
-        }
-
         private void DoAuth(object sender, RoutedEventArgs e) {
             var signupRequestData = new Model.HttpDataModel.AuthSignupRequest {
                 Email = Email,
@@ -77,19 +73,16 @@ namespace kindle_viewer.pages {
                 }
                 var token = result.data.token;
                 Config.JWT = token;
-                toProfileCheck();
+                toProfilePage();
             } catch (Exception err) {
                 this.authViewModel.HasError = true;
                 SentryLogger.Log(err);
             }
         }
 
-        private void toProfileCheck() {
-            if (Config.JWT == "") {
-                return;
-            }
-            var parentFrame = this.Frame;
-            parentFrame.Navigate(typeof(Profile));
+        private void toProfilePage() {
+            var f = this.Frame;
+            f.Navigate(typeof(Profile));
         }
 
         private void ToggleMode(object sender, RoutedEventArgs e) {

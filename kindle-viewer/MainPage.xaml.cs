@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using kindle_viewer.pages;
 using Windows.UI.Core;
+using kindle_viewer.Misc;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace kindle_viewer
@@ -54,8 +55,9 @@ namespace kindle_viewer
                     windowFrame.Navigate(typeof(ClipListPage));
                     break;
                 case "user":
-                    ContentFrame.Navigate(typeof(AuthContainer));
                     NavView.Header = "Profile";
+                    var page = Config.JWT == null || Config.JWT == "" ? typeof(AuthContainer) : typeof(Profile);
+                    ContentFrame.Navigate(page);
                     break;
                 case "square":
                     ContentFrame.Navigate(typeof(Square));
