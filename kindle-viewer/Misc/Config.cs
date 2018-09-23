@@ -10,7 +10,7 @@ namespace kindle_viewer.Misc
     {
         public static string UrlPrefix {
             get {
-#if !DEBUG
+#if DEBUG
                 // return "http://api.clippingkk.annatarhe.com/api";
                 return "http://localhost:9654/api";
 #else

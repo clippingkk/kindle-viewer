@@ -21,25 +21,20 @@ using Windows.UI.Core;
 using kindle_viewer.Misc;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace kindle_viewer
-{
+namespace kindle_viewer {
 
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
-    {
+    public sealed partial class MainPage : Page {
 
-        public MainPage()
-        {
+        public MainPage() {
             this.InitializeComponent();
         }
 
-        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
-        {
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
 
-            if (args.IsSettingsInvoked)
-            {
+            if (args.IsSettingsInvoked) {
                 ContentFrame.Navigate(typeof(SettingPage));
                 return;
             }
@@ -49,14 +44,13 @@ namespace kindle_viewer
                 .First(i => args.InvokedItem.Equals(i.Content))
                 .Tag.ToString();
             var windowFrame = Window.Current.Content as Frame;
-            switch (navItemTag)
-            {
+            switch (navItemTag) {
                 case "clippings":
                     windowFrame.Navigate(typeof(ClipListPage));
                     break;
                 case "user":
                     NavView.Header = "Profile";
-                    var page = Config.JWT == null || Config.JWT == "" ? typeof(AuthContainer) : typeof(Profile);
+                    var page = this.getProfilePage();
                     ContentFrame.Navigate(page);
                     break;
                 case "square":
@@ -72,8 +66,39 @@ namespace kindle_viewer
             }
         }
 
-        private void NavigationView_Loaded(object sender, RoutedEventArgs e)
-        {
+        private Type getProfilePage() {
+            Windows.Security.Credentials.PasswordCredential credential = null;
+
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            try {
+                var credentialList = vault.FindAllByResource(AuthViewModel.AUTH_JWT_TOKEN_NS);
+                if (credentialList.Count > 0) {
+                    if (credentialList.Count == 1) {
+                        credential = credentialList[0];
+                    } else {
+                        credential = vault.Retrieve(AuthViewModel.AUTH_JWT_TOKEN_NS, AuthViewModel.AUTH_USERNAME_NS);
+                    }
+                }
+
+            } catch {
+                // do nothing
+            }
+
+            if (Config.JWT == null || Config.JWT == "" || credential == null) {
+                return typeof(AuthContainer);
+            }
+
+            if ((Config.JWT == null || Config.JWT == "") && credential != null) {
+                credential.RetrievePassword();
+                var jwt = credential.Password;
+                Config.JWT = jwt;
+            }
+
+            return typeof(Profile);
+
+        }
+
+        private void NavigationView_Loaded(object sender, RoutedEventArgs e) {
             ContentFrame.Navigate(typeof(AuthContainer));
             NavView.Header = "Auth";
         }

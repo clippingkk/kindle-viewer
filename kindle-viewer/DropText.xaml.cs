@@ -32,7 +32,7 @@ namespace kindle_viewer {
         }
 
         private async void Grid_Drop(object sender, DragEventArgs e) {
-            if (Config.JWT == "") {
+            if (Config.JWT == null) {
                 var loginAlert = new Dialogs.LoginAlert();
 
                 await loginAlert.ShowAsync();
@@ -63,7 +63,6 @@ namespace kindle_viewer {
                 await db.Clippings.AddRangeAsync(clipItems);
                 await db.SaveChangesAsync();
             }
-
 
             // TODO: progress
             ContentDialog memAlert = new ContentDialog {

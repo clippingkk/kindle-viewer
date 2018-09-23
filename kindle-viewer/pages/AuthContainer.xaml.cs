@@ -20,6 +20,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace kindle_viewer.pages {
     class AuthViewModel : BindableBase {
+        static public string AUTH_JWT_TOKEN_NS = "clippingkk.jwt";
+        static public string AUTH_USERNAME_NS = "username";
 
         private bool hasError;
         private bool isSignupMode;
@@ -52,7 +54,10 @@ namespace kindle_viewer.pages {
             this.InitializeComponent();
         }
 
-        private void DoAuth(object sender, RoutedEventArgs e) {
+        private async void DoAuth(object sender, RoutedEventArgs e) {
+            if (!await this.isFormatValidAsync()) {
+                return;
+            }
             var signupRequestData = new Model.HttpDataModel.AuthSignupRequest {
                 Email = Email,
                 Pwd = Pwd,
@@ -73,11 +78,58 @@ namespace kindle_viewer.pages {
                 }
                 var token = result.data.token;
                 Config.JWT = token;
+                this.setToCredentials(token);
                 toProfilePage();
             } catch (Exception err) {
                 this.authViewModel.HasError = true;
                 SentryLogger.Log(err);
             }
+        }
+
+        private async System.Threading.Tasks.Task<bool> isFormatValidAsync() {
+            var emailValid = false;
+
+            try {
+                var addr = new System.Net.Mail.MailAddress(Email);
+                if (addr.Address == Email) {
+                    emailValid = true;
+                }
+            } catch {
+                emailValid = false;
+            }
+
+            if (!emailValid) {
+                // ui alert
+                var d = new Dialogs.FormValidFail("email");
+                await d.ShowAsync();
+                return false;
+            }
+
+            if (Pwd.Length < 6) {
+                var d = new Dialogs.FormValidFail("password");
+                await d.ShowAsync();
+                return false;
+            }
+
+            if (!this.authViewModel.IsSignupMode) {
+                return true;
+            }
+
+            var isAvatarUrl = Uri.IsWellFormedUriString(AvatarUrl, UriKind.RelativeOrAbsolute);
+            if (!isAvatarUrl) {
+                var d = new Dialogs.FormValidFail("avatar url");
+                await d.ShowAsync();
+                return false;
+            }
+
+            return true;
+        }
+
+        private void setToCredentials(string token) {
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            vault.Add(new Windows.Security.Credentials.PasswordCredential(
+                AuthViewModel.AUTH_JWT_TOKEN_NS, AuthViewModel.AUTH_USERNAME_NS, token
+            ));
         }
 
         private void toProfilePage() {

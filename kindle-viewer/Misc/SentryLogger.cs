@@ -9,14 +9,11 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.QueryStringDotNET;
 using System.Diagnostics;
 
-namespace kindle_viewer.Misc
-{
-    class SentryLogger
-    {
+namespace kindle_viewer.Misc {
+    class SentryLogger {
         private static RavenClient logger = new RavenClient("https://76acd61ea02341739aa86941f5a931be@sentry.io/1251804");
 
-        public static void Log(Exception e)
-        {
+        public static void Log(Exception e) {
 #if DEBUG
             Debug.WriteLine(e.ToString());
 #else
@@ -25,12 +22,9 @@ namespace kindle_viewer.Misc
             ShowErrorToast(e);
         }
 
-        private static void ShowErrorToast(Exception e)
-        {
-            ToastVisual visual = new ToastVisual()
-            {
-                BindingGeneric = new ToastBindingGeneric()
-                {
+        private static void ShowErrorToast(Exception e) {
+            ToastVisual visual = new ToastVisual() {
+                BindingGeneric = new ToastBindingGeneric() {
                     Children = {
                         new AdaptiveText()
                         {
@@ -43,8 +37,7 @@ namespace kindle_viewer.Misc
                 },
             };
 
-            ToastContent toastContent = new ToastContent()
-            {
+            ToastContent toastContent = new ToastContent() {
                 Visual = visual,
             };
 
