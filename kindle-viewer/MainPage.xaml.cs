@@ -99,7 +99,7 @@ namespace kindle_viewer {
         }
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e) {
-            ContentFrame.Navigate(typeof(AuthContainer));
+            ContentFrame.Navigate(this.getProfilePage());
             NavView.Header = "Auth";
         }
     }

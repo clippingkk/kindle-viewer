@@ -23,7 +23,7 @@ namespace kindle_viewer.Misc
 
         public static EasyHttp.Http.HttpClient GetHttpClient() {
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
-            http.Request.AddExtraHeader("jwt-token", Config.JWT);
+            http.Request.AddExtraHeader("Authorization", "Bearer " + Config.JWT);
             return http;
         }
     }

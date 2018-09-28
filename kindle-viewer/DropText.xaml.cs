@@ -147,8 +147,8 @@ namespace kindle_viewer {
                 return;
             }
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
-            var url = String.Format("/clippings-multip");
-            http.Request.AddExtraHeader("jwt-token", Config.JWT);
+            var url = String.Format("/clippings/multip/create");
+            http.Request.AddExtraHeader("Authorization", "Bearer " + Config.JWT);
             try {
                 var res = http.Post(url, new { clippings = clippingItemRequests }, EasyHttp.Http.HttpContentTypes.ApplicationJson);
                 var results = res.DynamicBody;
