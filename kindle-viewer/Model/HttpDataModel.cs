@@ -19,6 +19,9 @@ namespace kindle_viewer.Model
             public string Name { get; set; }
             [JsonName("avatarUrl")]
             public string AvatarUrl { get; set; }
+
+            [JsonName("fp")]
+            public string FingerPrint { get; set; }
         }
 
         public class ClippingItemRequest

@@ -18,7 +18,12 @@
             VerticalAlignment="Center"
         >
 
-            <TextBlock x:Uid="signupText" FontSize="32" Margin="0, 0, 0, 30" FontWeight="Light" />
+            <TextBlock
+                Text="{x:Bind authViewModel.PageH1Title, Mode=OneWay}"
+                FontSize="32"
+                Margin="0, 0, 0, 30"
+                FontWeight="Light"
+            />
 
             <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind Username, Mode=TwoWay}" x:Uid="usernameTextbox" Margin="0,0,0, 30" />
             <TextBox Text="{x:Bind Email, Mode=TwoWay}" x:Uid="emailTextbox" Margin="0,0,0, 30" />
@@ -26,8 +31,15 @@
             <TextBox Visibility="{x:Bind authViewModel.IsSignupMode, Mode=OneWay}" Text="{x:Bind AvatarUrl, Mode=TwoWay}" x:Uid="avatarTextBox"  Margin="0,0,0, 30" />
 
             <RelativePanel>
-                <Button Click="DoAuth" x:Uid="doSignup" x:Name="DoActionBtn" RelativePanel.AlignLeftWithPanel="True" />
-                <Button Click="ToggleMode" x:Uid="exchangeToLogin" RelativePanel.AlignRightWithPanel="True" />
+                <Button 
+                    Click="DoAuth"
+                    Content="{x:Bind authViewModel.PageH1Title, Mode=OneWay}"
+                    x:Name="DoActionBtn" RelativePanel.AlignLeftWithPanel="True" />
+                <Button 
+                    Click="ToggleMode" 
+                    Content="{x:Bind authViewModel.PageHasAccountTip, Mode=OneWay}" 
+                    RelativePanel.AlignRightWithPanel="True"
+                />
             </RelativePanel>
         </StackPanel>
     </StackPanel>

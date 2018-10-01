@@ -84,18 +84,14 @@ namespace kindle_viewer {
                 // do nothing
             }
 
-            if (Config.JWT == null || Config.JWT == "" || credential == null) {
+            if (credential == null) {
                 return typeof(AuthContainer);
             }
 
-            if ((Config.JWT == null || Config.JWT == "") && credential != null) {
-                credential.RetrievePassword();
-                var jwt = credential.Password;
-                Config.JWT = jwt;
-            }
-
+            credential.RetrievePassword();
+            var jwt = credential.Password;
+            Config.JWT = jwt;
             return typeof(Profile);
-
         }
 
         private void NavigationView_Loaded(object sender, RoutedEventArgs e) {

@@ -19,7 +19,7 @@ namespace kindle_viewer.Misc
             }
         }
 
-        public static string JWT { get; set; }
+        public static string JWT = "";
 
         public static EasyHttp.Http.HttpClient GetHttpClient() {
             EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
