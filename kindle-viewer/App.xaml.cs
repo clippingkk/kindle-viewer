@@ -7,8 +7,8 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.EntityFrameworkCore;
 using ClippingKKModel;
+using kindle_viewer.Misc;
 
 namespace kindle_viewer
 {
@@ -30,6 +30,7 @@ namespace kindle_viewer
             {
                 db.Migrate();
             }
+            SentryLogger.init();
         }
 
         /// <summary>
@@ -90,7 +91,6 @@ namespace kindle_viewer
             titleBar.ButtonInactiveForegroundColor = Colors.LightGray;
 
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-
         }
 
         /// <summary>
