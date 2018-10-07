@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kindle_viewer.Misc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,19 @@ namespace kindle_viewer.pages
         public SettingPage()
         {
             this.InitializeComponent();
+        }
+
+        private void onLogout(object sender, RoutedEventArgs e) {
+            if (Config.JWT == "") {
+                return;
+            }
+            var vault = new Windows.Security.Credentials.PasswordVault();
+            vault.Remove(
+                new Windows.Security.Credentials.PasswordCredential(
+                    AuthViewModel.AUTH_JWT_TOKEN_NS, AuthViewModel.AUTH_USERNAME_NS, Config.JWT
+                )
+            );
+            Config.JWT = "";
         }
     }
 }

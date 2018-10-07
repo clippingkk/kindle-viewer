@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
+using kindle_viewer.Repository;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -71,54 +72,31 @@ namespace kindle_viewer.pages {
             this.authViewModel = new AuthViewModel();
         }
 
-        private string getHardwareID() {
-            var hardwareId = Windows.System.Profile.HardwareIdentification.GetPackageSpecificToken(null).Id;
-            var dataReader = Windows.Storage.Streams.DataReader.FromBuffer(hardwareId);
-
-            byte[] bytes = new byte[hardwareId.Length];
-            dataReader.ReadBytes(bytes);
-            return BitConverter.ToString(bytes);
-        }
-
         private async void DoAuth(object sender, RoutedEventArgs e) {
             if (!await this.isFormatValidAsync()) {
                 return;
             }
 
-            var signupRequestData = new Model.HttpDataModel.AuthSignupRequest {
-                Email = Email,
-                Pwd = Pwd,
-                AvatarUrl = AvatarUrl,
-                Name = Username,
-                FingerPrint = this.getHardwareID(),
-            };
-            var loginRequestData = new Model.HttpDataModel.AuthLoginRequest { Email = Email, Pwd = Pwd };
-            EasyHttp.Http.HttpClient http = Config.GetHttpClient();
-            var url = String.Format("/auth/{0}", this.authViewModel.IsSignupMode ? "signup" : "login");
             try {
-                var res = http.Post(url, this.authViewModel.IsSignupMode ? signupRequestData : loginRequestData, EasyHttp.Http.HttpContentTypes.ApplicationJson);
-                var result = res.DynamicBody;
-
-                if (result.status != 200) {
-                    this.authViewModel.HasError = true;
-                    var err = new Exception(result.msg);
-                    throw err;
-                }
+                Auth auth = new Auth();
+                var res = await (authViewModel.IsSignupMode ?
+                    auth.Signup(Email, Pwd, Username, AvatarUrl) :
+                    auth.Login(Email, Pwd));
 
                 if (this.authViewModel.IsSignupMode) {
                     await (new Dialogs.SignupSuccess()).ShowAsync();
+                    this.authViewModel.IsSignupMode = false;
                     return;
                 }
-
-                var token = result.data.token;
-                Config.JWT = token;
-                this.setToCredentials(token);
                 this.authViewModel.IsSignupMode = false;
+
+                Config.JWT = res.token;
+                this.setToCredentials(res.token);
                 this.toProfilePage();
             } catch (Exception err) {
                 this.authViewModel.HasError = true;
-                SentryLogger.Log(err);
             }
+            
         }
 
         private async System.Threading.Tasks.Task<bool> isFormatValidAsync() {
@@ -174,7 +152,6 @@ namespace kindle_viewer.pages {
 
         private void ToggleMode(object sender, RoutedEventArgs e) {
             this.authViewModel.IsSignupMode = !this.authViewModel.IsSignupMode;
-            // DoActionBtn.Content = this.authViewModel.IsSignupMode ? "Signup" : "Login";
         }
     }
 }

@@ -15,11 +15,14 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="kindle_viewer.App">
-      <uap:VisualElements DisplayName="ClippingKK" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="ClippingX is a book clipping viewer." BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="ClippingKK" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="ClippingKK is a book clipping viewer." BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="Kindle Viewer" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Match="https://api.clippingkk.annatarhe.com" Type="include" WindowsRuntimeAccess="all" />
+      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
   <Capabilities>

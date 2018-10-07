@@ -171,4 +171,7 @@
   <data name="usernameTextbox.PlaceholderText" xml:space="preserve">
     <value>your username</value>
   </data>
+  <data name="logoutText.Content" xml:space="preserve">
+    <value>logout</value>
+  </data>
 </root>

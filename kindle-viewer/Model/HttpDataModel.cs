@@ -1,5 +1,8 @@
-﻿using JsonFx.Json;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp.Deserializers;
 using System;
+using System.Collections.Generic;
 
 namespace kindle_viewer.Model
 {
@@ -8,32 +11,54 @@ namespace kindle_viewer.Model
 
         public class AuthLoginRequest
         {
-            [JsonName("email")]
+            [JsonProperty(PropertyName = "email")]
             public string Email { get; set; }
-            [JsonName("pwd")]
+            [JsonProperty(PropertyName = "pwd")]
             public string Pwd { get; set; }
+
+            public AuthLoginRequest(string email, string pwd) {
+                this.Email = email;
+                this.Pwd = pwd;
+
+            }
         }
         public class AuthSignupRequest : AuthLoginRequest
         {
-            [JsonName("name")]
+            [JsonProperty(PropertyName = "name")]
             public string Name { get; set; }
-            [JsonName("avatarUrl")]
+            [JsonProperty(PropertyName = "avatarUrl")]
             public string AvatarUrl { get; set; }
+            [JsonProperty(PropertyName = "fp")]
+            public string fp { get; set; }
 
-            [JsonName("fp")]
-            public string FingerPrint { get; set; }
+            public AuthSignupRequest(
+                string email, string pwd,
+                string name, string avatarUrl,
+                string fp
+            ): base(email, pwd) {
+                this.Name = name;
+                this.AvatarUrl = avatarUrl;
+                this.fp = fp;
+            }
         }
 
+        [JsonObject(MemberSerialization.OptIn)]
         public class ClippingItemRequest
         {
-            [JsonName("title")]
+            [JsonProperty(PropertyName = "title")]
             public string Title { get; set; }
-            [JsonName("content")]
+            [JsonProperty(PropertyName = "content")]
             public string Content { get; set; }
-            [JsonName("pageAt")]
+            [JsonProperty(PropertyName = "pageAt")]
             public string Location { get; set; }
-            [JsonName("bookId")]
+            [JsonProperty(PropertyName = "bookId")]
             public string BookID { get; set; }
         }
+
+        public class ClippingsRequest {
+            [JsonProperty(PropertyName = "clippings")]
+            public List<ClippingItemRequest> clippings { get; set; }
+        }
     }
+    
 }

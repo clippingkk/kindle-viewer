@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Blend for Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kindle-viewer", "kindle-viewer\kindle-viewer.csproj", "{1C576535-4957-4E7F-AFC5-E394A6EE68C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClippingKKModel", "ClippingKKModel\ClippingKKModel\ClippingKKModel.csproj", "{E061C8AB-233A-48E2-8927-CC8CE1D2C28E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClippingKKModel", "ClippingKKModel\ClippingKKModel\ClippingKKModel.csproj", "{E061C8AB-233A-48E2-8927-CC8CE1D2C28E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

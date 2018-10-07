@@ -58,7 +58,7 @@ namespace kindle_viewer {
             Debug.WriteLine(file.FileType.ToString());
             var clipItems = await this.FileParser(file);
 
-            this.uploadToServer(clipItems);
+            await this.uploadToServer(clipItems);
             using (var db = new ClippingContext()) {
                 await db.Clippings.AddRangeAsync(clipItems);
                 await db.SaveChangesAsync();
@@ -112,11 +112,11 @@ namespace kindle_viewer {
                     currentLine++;
                 }
             }
-            clipItems.ForEach(i => i.DataId = Misc.Encrypt.Sha256(i.Content + i.Location));
+            clipItems.ForEach(i => i.DataId = Encrypt.Sha256(i.Content + i.Location));
             return clipItems;
         }
 
-        private void uploadToServer(List<ClippingItem> clippings) {
+        private async Task<bool> uploadToServer(List<ClippingItem> clippings) {
             var offset = 0;
             var db = new ClippingContext();
             while (offset < clippings.Count()) {
@@ -136,24 +136,26 @@ namespace kindle_viewer {
                     }
                 }
 
-                this.upload(uploadData);
+                await this.upload(uploadData);
                 offset += 20;
             }
             db.Dispose();
+            return true;
         }
 
-        private void upload(List<Model.HttpDataModel.ClippingItemRequest> clippingItemRequests) {
+        private async Task<bool> upload(List<Model.HttpDataModel.ClippingItemRequest> clippingItemRequests) {
             if (clippingItemRequests.Count == 0) {
-                return;
+                return true;
             }
-            EasyHttp.Http.HttpClient http = new EasyHttp.Http.HttpClient(Config.UrlPrefix);
-            var url = String.Format("/clippings/multip/create");
-            http.Request.AddExtraHeader("Authorization", "Bearer " + Config.JWT);
+
+            var clippingsAPI = new Repository.Clippings();
+
             try {
-                var res = http.Post(url, new { clippings = clippingItemRequests }, EasyHttp.Http.HttpContentTypes.ApplicationJson);
-                var results = res.DynamicBody;
+                clippingsAPI.UplodClippings(clippingItemRequests);
+                return true;
             } catch (Exception err) {
-                SentryLogger.Log(err);
+               SentryLogger.Log(err);
+               return false;
             }
         }
 

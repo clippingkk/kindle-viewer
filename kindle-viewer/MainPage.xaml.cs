@@ -35,6 +35,7 @@ namespace kindle_viewer {
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
 
             if (args.IsSettingsInvoked) {
+                NavView.Header = "Settings";
                 ContentFrame.Navigate(typeof(SettingPage));
                 return;
             }
