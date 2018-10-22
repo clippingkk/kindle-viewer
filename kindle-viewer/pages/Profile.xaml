@@ -10,6 +10,12 @@
 
 
     <StackPanel>
-        <TextBlock>Profile page not ready for now</TextBlock>
+        <StackPanel>
+            <Image />
+            <StackPanel>
+                <TextBlock Text="username" />
+                <TextBlock Text="count" />
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </Page>
