@@ -72,6 +72,23 @@ namespace kindle_viewer.Misc {
             var d = serializer.Deserialize<T>(resultObj.data);
             return d;
         }
+        public async Task<T> Get<T>(string url) {
+            Uri uri = new Uri(url);
+            HttpResponseMessage result = await http.GetAsync(uri);
+            if (!result.IsSuccessStatusCode) {
+                LogError(url, result);
+            };
+            var resultContentString = await result.Content.ReadAsStringAsync();
+            KKCommonResponse resultObj = serializer.Deserialize<KKCommonResponse>(resultContentString);
+            result.Dispose();
+            if (resultObj.status != 200) {
+                var e = new KKHttpException(url, resultObj);
+                SentryLogger.Log(e);
+                return default(T);
+            }
+            var d = serializer.Deserialize<T>(resultObj.data);
+            return d;
+        }
         
         public async Task<dynamic> Post(string url, dynamic body) {
 
@@ -91,9 +108,7 @@ namespace kindle_viewer.Misc {
                 SentryLogger.Log(e);
             }
             return resultObj.data;
-
         }
-        
 
 
         private HttpStringContent getJsonContent(dynamic body) {

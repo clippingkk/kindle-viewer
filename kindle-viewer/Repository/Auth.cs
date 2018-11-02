@@ -43,5 +43,10 @@ namespace kindle_viewer.Repository {
             dataReader.ReadBytes(bytes);
             return BitConverter.ToString(bytes);
         }
+
+        public async Task<User> GetUserBy(string id) {
+            User user = await this.Get<User>("/auth/" + id);
+            return user
+        }
     }
 }

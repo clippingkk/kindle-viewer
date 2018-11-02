@@ -11,7 +11,7 @@
 
     <StackPanel>
         <StackPanel>
-            <Image />
+            <Image Source="{x:Bind profile.Avatar, Mode=OneWay}" />
             <StackPanel>
                 <TextBlock Text="username" />
                 <TextBlock Text="count" />
