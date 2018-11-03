@@ -10,11 +10,21 @@
 
 
     <StackPanel>
-        <StackPanel>
-            <Image Source="{x:Bind profile.Avatar, Mode=OneWay}" />
-            <StackPanel>
-                <TextBlock Text="username" />
-                <TextBlock Text="count" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0, 30,0,0"
+                    BorderBrush="White"
+                    BorderThickness="10"
+                    >
+            <Image
+                Source="{x:Bind profile.Avatar, Mode=OneWay}" Width="150" Height="150"
+                />
+            <StackPanel VerticalAlignment="Center"
+                        Background="Transparent"
+                        >
+                <TextBlock Text="{x:Bind profile.Email, Mode=OneWay}" />
+                <TextBlock Text="{x:Bind profile.Name, Mode=OneWay}" />
             </StackPanel>
         </StackPanel>
     </StackPanel>

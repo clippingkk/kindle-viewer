@@ -1,4 +1,5 @@
 ﻿using kindle_viewer.Common;
+using kindle_viewer.Misc;
 using kindle_viewer.Repository;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -7,10 +8,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace kindle_viewer.pages {
     class ProfileUserVM : BindableBase {
-        private string name;
-        private string email;
-        private string avatar;
-        private bool checkedMark;
+        private string name = "";
+        private string email = "";
+        private string avatar = "https://via.placeholder.com/300/FFFF00/000000?Text=avatar";
+        private bool checkedMark = false;
 
         public string Name {
             get { return this.name; }
@@ -42,24 +43,22 @@ namespace kindle_viewer.pages {
     /// </summary>
     public sealed partial class Profile : Page {
 
-        ProfileUserVM profile { get; set; }
+        ProfileUserVM profile { get; set; } = new ProfileUserVM();
 
         public Profile() {
             this.InitializeComponent();
-
-            this.profile = new ProfileUserVM();
 
             this.loadUserProfile();
         }
 
         private async Task<bool> loadUserProfile() {
 
-            User user = await (new Auth()).GetUserBy("1");
+            ProfileResponse response = await (new Auth()).GetUserBy(Config.uid.ToString());
 
-            profile.Name = user.name;
-            profile.Email = user.email;
-            profile.Avatar = user.avatar;
-            profile.CheckedMark = user.checkedMark;
+            profile.Name = response.user.name;
+            profile.Email = response.user.email;
+            profile.Avatar = response.user.avatar;
+            profile.CheckedMark = response.user.checkedMark;
             
             return true;
         }

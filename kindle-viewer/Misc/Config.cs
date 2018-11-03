@@ -23,5 +23,6 @@ namespace kindle_viewer.Misc
         }
 
         public static string JWT = "";
+        public static int uid = -1;
     }
 }

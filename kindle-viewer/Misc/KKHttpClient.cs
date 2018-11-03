@@ -73,7 +73,7 @@ namespace kindle_viewer.Misc {
             return d;
         }
         public async Task<T> Get<T>(string url) {
-            Uri uri = new Uri(url);
+            Uri uri = new Uri(Config.UrlPrefix + url);
             HttpResponseMessage result = await http.GetAsync(uri);
             if (!result.IsSuccessStatusCode) {
                 LogError(url, result);

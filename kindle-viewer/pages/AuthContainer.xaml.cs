@@ -91,7 +91,8 @@ namespace kindle_viewer.pages {
                 this.authViewModel.IsSignupMode = false;
 
                 Config.JWT = res.token;
-                this.setToCredentials(res.token);
+                Config.uid = res.id;
+                this.setToCredentials(res.id, res.token);
                 this.toProfilePage();
             } catch (Exception err) {
                 this.authViewModel.HasError = true;
@@ -138,10 +139,13 @@ namespace kindle_viewer.pages {
             return true;
         }
 
-        private void setToCredentials(string token) {
+        private void setToCredentials(int uid, string token) {
+
+            var data = uid.ToString() + "|" + token;
+
             var vault = new Windows.Security.Credentials.PasswordVault();
             vault.Add(new Windows.Security.Credentials.PasswordCredential(
-                AuthViewModel.AUTH_JWT_TOKEN_NS, AuthViewModel.AUTH_USERNAME_NS, token
+                AuthViewModel.AUTH_JWT_TOKEN_NS, AuthViewModel.AUTH_USERNAME_NS, data
             ));
         }
 

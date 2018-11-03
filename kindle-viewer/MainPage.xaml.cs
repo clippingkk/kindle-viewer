@@ -90,8 +90,15 @@ namespace kindle_viewer {
             }
 
             credential.RetrievePassword();
-            var jwt = credential.Password;
-            Config.JWT = jwt;
+            var data = credential.Password;
+            var idAndJWT = data.Split("|");
+            if (idAndJWT.Length < 2) {
+                return typeof(AuthContainer);
+            }
+            int uid = -1;
+            Int32.TryParse(idAndJWT[0], out uid);
+            Config.uid = uid;
+            Config.JWT = idAndJWT[1];
             return typeof(Profile);
         }
 

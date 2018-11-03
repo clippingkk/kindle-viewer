@@ -9,6 +9,17 @@ using RestSharp;
 using Newtonsoft.Json;
 
 namespace kindle_viewer.Repository {
+
+    public class ProfileResponse {
+        [JsonProperty(PropertyName = "user")]
+        public User user { get; set; }
+        [JsonProperty(PropertyName = "clippingsCount")]
+        public int clippingsCount { get; set; }
+        [JsonProperty(PropertyName = "clippings")]
+        public List<HTTPClippingItem> Clippings { get; set; }
+    }
+
+
     public class Auth : KKHttpClient {
 
         public async Task<User> Login(string email, string pwd) {
@@ -44,9 +55,9 @@ namespace kindle_viewer.Repository {
             return BitConverter.ToString(bytes);
         }
 
-        public async Task<User> GetUserBy(string id) {
-            User user = await this.Get<User>("/auth/" + id);
-            return user
+        public async Task<ProfileResponse> GetUserBy(string id) {
+            ProfileResponse user = await this.Get<ProfileResponse>("/auth/" + id);
+            return user;
         }
     }
 }
