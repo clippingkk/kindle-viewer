@@ -14,8 +14,8 @@ namespace kindle_viewer.Misc
         public static string UrlPrefix {
             get {
 #if DEBUG
-                // return "https://api.clippingkk.annatarhe.com/api";
-                return "http://localhost:9654/api";
+                return "https://api.clippingkk.annatarhe.com/api";
+                // return "http://localhost:9654/api";
 #else
                 return "https://api.clippingkk.annatarhe.com/api";
 #endif

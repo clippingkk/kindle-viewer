@@ -9,20 +9,29 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
-    <StackPanel>
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Margin="0, 30,0,0"
-                    BorderBrush="White"
-                    BorderThickness="10"
-                    >
+    <StackPanel
+         Background="{StaticResource SystemControlChromeHighAcrylicWindowMediumBrush}"
+    >
+        <StackPanel 
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Margin="0, 30,0,0"
+            BorderBrush="{StaticResource SystemControlAcrylicElementMediumHighBrush}"
+            CornerRadius="4"
+            BorderThickness="20"
+            Width="500"
+        >
             <Image
-                Source="{x:Bind profile.Avatar, Mode=OneWay}" Width="150" Height="150"
+                Source="{x:Bind profile.Avatar, Mode=OneWay}"
+                Width="150"
+                Height="150"
                 />
-            <StackPanel VerticalAlignment="Center"
-                        Background="Transparent"
-                        >
+            <StackPanel
+                VerticalAlignment="Center"
+                Padding="20"
+                HorizontalAlignment="Center"
+            >
                 <TextBlock Text="{x:Bind profile.Email, Mode=OneWay}" />
                 <TextBlock Text="{x:Bind profile.Name, Mode=OneWay}" />
             </StackPanel>

@@ -16,7 +16,7 @@ namespace kindle_viewer.Repository {
         [JsonProperty(PropertyName = "clippingsCount")]
         public int clippingsCount { get; set; }
         [JsonProperty(PropertyName = "clippings")]
-        public List<HTTPClippingItem> Clippings { get; set; }
+        public List<HTTPClippingItem> clippings { get; set; }
     }
 
 

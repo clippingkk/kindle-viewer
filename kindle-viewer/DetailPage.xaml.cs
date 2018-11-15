@@ -41,6 +41,7 @@ namespace kindle_viewer
         {
             var clipItem = (ClippingItem)e.Parameter;
             this.clipItem = clipItem;
+
             LoadBookInfo();
         }
 
