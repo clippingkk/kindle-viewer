@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace kindle_viewer.pages {
-    class ProfileUserVM : BindableBase {
+    public class ProfileUserVM : BindableBase {
         private string name = "";
         private string email = "";
         private string avatar = "https://via.placeholder.com/300/FFFF00/000000?Text=avatar";
