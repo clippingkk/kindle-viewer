@@ -12,9 +12,8 @@ using ClippingKKModel;
 
 namespace kindle_viewer
 {
-    class ClipListObservable: ObservableCollection<ClippingItem>, ISupportIncrementalLoading
+    public class ClipListObservable: ObservableCollection<ClippingItem>, ISupportIncrementalLoading
     {
-
         private ClippingContext clippingContext;
         private int offset = 0;
         private readonly int take = 20;

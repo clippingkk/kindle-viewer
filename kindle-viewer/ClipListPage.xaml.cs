@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Core;
+using kindle_viewer.Model;
+using System.Threading.Tasks;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -29,6 +31,7 @@ namespace kindle_viewer
     {
         private SystemNavigationManager navigationManager;
         private ClipListObservable clipList = new ClipListObservable();
+        private BookListObservable books = new BookListObservable();
 
         public ClipListPage()
         {
@@ -50,10 +53,13 @@ namespace kindle_viewer
             this.navigationManager.BackRequested -= this.onAppBarBackRequested;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
 
             this.clipList.SetupClips();
+
+            await this.books.LoadMoreItemsAsync(20);
+            Console.WriteLine(this.books);
             if (e.NavigationMode == NavigationMode.New)
             {
                 this.navigationManager = SystemNavigationManager.GetForCurrentView();

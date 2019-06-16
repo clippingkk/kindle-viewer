@@ -28,4 +28,19 @@ namespace ClippingKKModel
         public string Author { get; set; }
         public string DataId { get; set; }
     }
+
+    public class KKBookItem
+    {
+        public int id { get; set; }
+        public double rating { get; set; }
+        public string author { get; set; }
+        public string originTitle { get; set; }
+        public string image { get; set; }
+        public string doubanId { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public string authorIntro { get; set; }
+        public string summary { get; set; }
+        public DateTime pubdate { get; set; }
+    }
 }

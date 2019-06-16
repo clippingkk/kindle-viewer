@@ -11,7 +11,7 @@
     <AssemblyName>kindle-viewer</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -102,6 +102,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\BookGrid.xaml.cs">
+      <DependentUpon>BookGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\ClippingList.xaml.cs">
+      <DependentUpon>ClippingList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\ProfileInfo.xaml.cs">
       <DependentUpon>ProfileInfo.xaml</DependentUpon>
     </Compile>
@@ -114,9 +120,11 @@
     <Compile Include="Dialogs\SignupSuccess.xaml.cs">
       <DependentUpon>SignupSuccess.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Misc\DetailPhotoCrator.cs" />
     <Compile Include="Misc\Encrypt.cs" />
     <Compile Include="Misc\JsonSerializer.cs" />
     <Compile Include="Misc\KKHttpClient.cs" />
+    <Compile Include="Model\BookListObservable.cs" />
     <Compile Include="Model\ClipListObservable.cs" />
     <Compile Include="ClipListPage.xaml.cs">
       <DependentUpon>ClipListPage.xaml</DependentUpon>
@@ -150,6 +158,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Auth.cs" />
+    <Compile Include="Repository\Books.cs" />
     <Compile Include="Repository\Clippings.cs" />
     <Compile Include="Repository\KKCommonResponse.cs" />
   </ItemGroup>
@@ -223,6 +232,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\BookGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\ClippingList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\ProfileInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -289,6 +306,9 @@
     </PackageReference>
     <PackageReference Include="Sentry">
       <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Win2D.uwp">
+      <Version>1.23.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
